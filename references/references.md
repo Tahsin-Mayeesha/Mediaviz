@@ -29,8 +29,7 @@
 * https://gephi.org/
 
 
+# Books
 
-
-
-
-
+* https://cs.brown.edu/~rt/gdhandbook/
+* ​
