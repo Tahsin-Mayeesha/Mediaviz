@@ -33,19 +33,19 @@ def main():
     
     pos = force_atlas2_layout(
         G,
-        iterations=2000,
+        iterations=50,
         pos_list=None,
         node_masses=None,
         outbound_attraction_distribution=False,
         lin_log_mode=False,
-        prevent_overlapping=False,
+        prevent_overlapping=True,
         edge_weight_influence=1.0,
 
         jitter_tolerance=1.0,
         barnes_hut_optimize=True,
         barnes_hut_theta=0.5,
 
-        scaling_ratio=60,
+        scaling_ratio=38,
         strong_gravity_mode=False,
         multithread=False,
         gravity=1.0)
@@ -89,15 +89,10 @@ def main():
     #ax.set(xlim=[0.0, 1.0], ylim=[0.0, 1.0], title='Network Viz')
 
 
-    # Draw the nodes
+    # Draw the nodes, edges, labels
     
-    nodes = nx.draw_networkx_nodes(top_k_subgraph,pos=subgraph_pos,node_size=node_sizes,node_color=node_colors,                                            alpha=.2);
-    # Draw the edges
-    
+    nodes = nx.draw_networkx_nodes(top_k_subgraph,pos=subgraph_pos,node_size=node_sizes,node_color=node_colors,                                            alpha=.2);    
     edges = nx.draw_networkx_edges(top_k_subgraph,pos=subgraph_pos,edge_color=edge_colors,alpha=0.01);
-    
-    # Draw the labels
-    
     labels = nx.draw_networkx_labels(top_k_subgraph,pos=subgraph_pos,labels=top_20_labels, font_size=8);
 
     # Adjust label overlapping

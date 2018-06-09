@@ -7,10 +7,14 @@ def set_node_color(G,color_by,colormap=None):
     return node_colors
 
 
-def set_node_size(G,size_field,max_node_size,dict_form=False):
-    max_node_val = max([n[1][size_field] for n in G.nodes(data=True)])
-    node_sizes = [max_node_size * (n[1][size_field] / max_node_val) for n in G.nodes(data=True)]
-    return node_sizes
+def set_node_size(G,size_field,min_size,max_size):
+    """ https://www.youtube.com/watch?v=SrjX2cjM3Es """
+    vals = np.array([n[1][size_field] for n in G.nodes(data=True)])
+    min_val = vals.min()
+    max_val = vals.max()
+    return (((vals - min_val)*(max_size-min_size))/(max_val-min_val)) + min_size
+        
+
     
 
 
@@ -31,7 +35,49 @@ def edgecolor_by_source(G,node_colors):
         edge_colormap.append(node_colormap[edge[0]])
     return edge_colormap
 
-    
-    
+        
 def get_subgraph_pos(G,pos):
     return {k:v for k,v in pos.items() if k in G.nodes()}
+
+def rotate(point, angle, origin = (0,0)):
+    """
+    Rotate a point counterclockwise by a given angle around a given origin.
+
+    The angle should be given in radians.
+    """
+    ox, oy = origin
+    px, py = point
+    angle = math.radians(angle)
+
+    qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
+    qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
+    return qx, qy
+
+# rotation example  : pos2 = {k:rotate(v,45,(0.5,0.5)) for k,v in pos2.items()}
+
+def node_size_dict(G,size_field,max_node_size):
+    node_sizes = set_node_size(G,size_field= size_field,max_node_size=max_node_size)
+    return dict(zip(G.nodes(),node_sizes))
+
+# sizes = node_size_dict(G,"inlink_count",0.029)
+
+def draw_networkx_nodes_custom(pos,node_size=300,node_color='r',alpha = 1, ax=None, **kwds):
+    
+    
+    x = np.array([v[0] for v in pos.values()],dtype=np.float32)
+    y = np.array([v[1] for v in pos.values()],dtype = np.float32)
+    
+    patches = [plt.Circle((x,y),radius=s) for x,y,s in zip(x,y,node_size)]
+    
+    if ax == None:
+        ax = plt.gca()
+    
+    coll = matplotlib.collections.PatchCollection(patches,color=node_colors,alpha=alpha,**kwds)
+    ax.add_collection(coll)
+
+    ax.margins(0.01)    
+    
+    
+# https://stackoverflow.com/questions/32444037/how-can-i-plot-many-thousands-of-circles-quickly
+
+
