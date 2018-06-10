@@ -1,7 +1,7 @@
 import math
 import networkx as nx
 from itertools import combinations
-from utils import node_size_dict
+from utils import set_node_size
 from fa2l import force_atlas2_layout
 
 
@@ -48,7 +48,7 @@ def top_k_node_overlap(G,pos,node_sizes,k=20):
     
     
     
-def has_node_apart(G,pos,node_sizes,k=2,d=10):
+def has_node_apart(G,pos,node_sizes,k=2,d=0.9):
     """ Boolean. Returns True if any of the top k nodes are too far away from each other.
         params : 
         G = graph object
@@ -77,17 +77,17 @@ def extract_correct_scale(G, node_sizes,min_scale,max_scale):
     while first<=last and not found:
     
         scale = (first + last)/2
-        print("iteration = " + str(iteration))
+        print("iteration : " + str(iteration))
+        print("current range : " + str((first,last)))
         print("current scale : " + str(scale))
-        print("min_scale is " + str(first))
-        print("max_scale is " + str(last))
+
         pos = force_atlas2_layout(
               G,
               iterations=50,
               pos_list=None,
               node_masses=None,
-              outbound_attraction_distribution=False,
-              lin_log_mode=False,
+              outbound_attraction_distribution=True,
+              lin_log_mode=True,
               prevent_overlapping=True,
               edge_weight_influence=1.0,
               jitter_tolerance=1.0,
@@ -100,24 +100,19 @@ def extract_correct_scale(G, node_sizes,min_scale,max_scale):
         
         node_overlap = top_k_node_overlap(G,pos,node_sizes)
         node_too_far = has_node_apart(G,pos,node_sizes)
+        
         print("node_overlap is " + str(node_overlap))
         print("node_too_far is "+ str(node_too_far))
         
         if node_overlap ==False and node_too_far == False :
             found = True
-            return found,scale,pos
+            return (found,scale,pos)
         else:
             if node_overlap == True:
                 first = scale+1
             else:
                 last = scale-1
+        iteration = iteration + 1 
+    return (found)
 
-    return found
 
-
-G = nx.read_gexf("seth_rich.gexf")
-sizes = node_size_dict(G,"inlink_count",50)
-G = max(nx.weakly_connected_component_subgraphs(G), key=len).to_undirected()
-
-result = extract_correct_scale(G,sizes,10,100)
-print("result")
