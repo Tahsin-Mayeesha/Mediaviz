@@ -1,3 +1,7 @@
+# this has to be first to make sure that matplotlib runs in headless mode
+import matplotlib
+matplotlib.use("Agg")
+
 import sys
 import numpy as np
 import warnings
@@ -41,24 +45,24 @@ def main():
 
     # If the size of Graph > 1000 nodes, set G to the subgraph containing largest 1000 nodes to get the layout
     
-    if len(G.nodes()) > 1000:
-        G = filter_graph(G,filter_by=filter_field,top=1000).to_undirected()
+    G = filter_graph(G,filter_by=filter_field,top=1000).to_undirected()
 
     # extract the positions
+    print("laying out with fa2l...")
     
     pos = force_atlas2_layout(
         G,
         iterations=50,
         pos_list=None,
         node_masses=None,
-        outbound_attraction_distribution=True,
-        lin_log_mode=True,
-        prevent_overlapping=True,
+        outbound_attraction_distribution=False,
+        lin_log_mode=False,
+        prevent_overlapping=False,
         edge_weight_influence=1.0,
 
         jitter_tolerance=1.0,
         barnes_hut_optimize=True,
-        barnes_hut_theta=0.5,
+        barnes_hut_theta=1.0,
 
         scaling_ratio=38,
         strong_gravity_mode=False,
@@ -66,7 +70,7 @@ def main():
         gravity=1.0)
     
     print("Extracted the positions")
-    print(pos)
+    #print(pos)
 
     # Extract top 500 nodes for visualization
     top_k_subgraph = filter_graph(G,filter_by=filter_field,top=k).to_undirected()
@@ -75,7 +79,7 @@ def main():
     
     node_colors = set_node_color(top_k_subgraph,color_by=color_field,colormap=colormap)
     node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 0.1, max_size=800)
-    node_labels = set_node_label(top_k_subgraph,label = label_field)
+    node_labels = set_node_label(top_k_subgraph,label_field = label_field)
     subgraph_pos = get_subgraph_pos(top_k_subgraph,pos)
     edge_colors = edgecolor_by_source(top_k_subgraph,node_colors)
     
