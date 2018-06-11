@@ -4,13 +4,15 @@ This repository is for my project [Automating Network Visualization and communit
 
 # Dependencies : 
 
-* ```networkx``` 
+* [networkx](https://networkx.github.io)
 
-* ```fa2l```
+* [fa2l](https://github.com/bosiakov/fa2l/tree/master/fa2l)
 
-* ```adjustText```
+* [adjusttext](http://adjusttext.readthedocs.io)
 
-* ```matplotlib```
+* [matplotlib](https://matplotlib.org)
+
+* [numpy](http://www.numpy.org/)
 
   
 
