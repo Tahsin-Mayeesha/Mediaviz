@@ -226,39 +226,42 @@ def rotation_layout(pos,angle,origin=(0,0)):
     return { k:rotate(v,angle,origin) for k,v in pos.items()}
 
 
-def draw_networkx_nodes_custom(G,pos,node_size=300,node_color='r',alpha = 1, ax=None, **kwds):
+def draw_networkx_nodes_custom(G,pos,node_size,node_color='r',alpha = 1, ax=None, **kwds):
+    """ Draws networkx graph nodes with circles instead of using scatter function like draw_networkx_nodes
     
-    """ Draws network nodes with circles using matplotlib patch collections.
-        Function showing errors so under improvement.
+    G: A networkx graph object.
+    pos : A dictionary with nodes as keys and positions as values
+    node_size : A list containing node sizes for each node
+    node_color : A single color or list containing color values. Behavior same as draw_networkx_nodes
+    alpha : opacity (between 0-1) for setting transparency of the nodes
+    ax : axis 
     
     """
-    
     try:
-        import matplotlib.pyplot as plt
+        import matplotlib
     except ImportError:
         raise ImportError("Matplotlib required for draw()")
     except RuntimeError:
         print("Matplotlib unable to open display")
         raise
-        
+    
     if pos == None:
         pos = nx.drawing.spring_layout(G)  # default to spring layout
         
     if ax == None:
         ax = plt.gca()
         
-    
-    
     x =[v[0] for v in pos.values()]
     y =[v[1] for v in pos.values()]
     
     patches = [plt.Circle((x,y),radius=s) for x,y,s in zip(x,y,node_size)]
     
     
-    coll = matplotlib.collections.PatchCollection(patches,color=node_colors,alpha=alpha,**kwds)
+    coll = matplotlib.collections.PatchCollection(patches,color=node_color,alpha=alpha,**kwds)
     ax.add_collection(coll)
 
-    ax.margins(0.01)    
+    #ax.margins(0.01)    
+      
     
     
 # https://stackoverflow.com/questions/32444037/how-can-i-plot-many-thousands-of-circles-quickly
