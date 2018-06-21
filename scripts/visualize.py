@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from adjustText import adjust_text
 
 from utils import set_node_size, set_node_color, set_node_label, edgecolor_by_source,filter_graph, get_subgraph_pos
-# from scaling import extract_correct_scale
+from scaling import extract_correct_scale
 
 def main():
     if len(sys.argv) < 2:
@@ -50,24 +50,29 @@ def main():
     # extract the positions
     print("laying out with fa2l...")
     
-    pos = force_atlas2_layout(
-        G,
-        iterations=50,
-        pos_list=None,
-        node_masses=None,
-        outbound_attraction_distribution=False,
-        lin_log_mode=False,
-        prevent_overlapping=False,
-        edge_weight_influence=1.0,
-
-        jitter_tolerance=1.0,
-        barnes_hut_optimize=True,
-        barnes_hut_theta=1.0,
-
-        scaling_ratio=38,
-        strong_gravity_mode=False,
-        multithread=False,
-        gravity=1.0)
+    # calculate node sizes
+    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 0.1, max_size=800)
+    # setting up scale automatic. if search failed then the position is calculated with a default scale.
+    # note : set up scale and positions should be calculated in the scale script instead of the visualization script. modify later.
+    result = extract_correct_scale(G,node_sizes,10,100)
+    if result[0] == False:
+        pos = force_atlas2_layout(G,
+                                 iterations=50,
+                                 pos_list=None,
+                                 node_masses=None,
+                                 outbound_attraction_distribution=False,
+                                 lin_log_mode=False,
+                                 prevent_overlapping=False,
+                                 edge_weight_influence=1.0,
+                                 jitter_tolerance=1.0,
+                                 barnes_hut_optimize=True,
+                                 barnes_hut_theta=1.0,
+                                 scaling_ratio=38,
+                                strong_gravity_mode=False,
+                                multithread=False,
+                                gravity=1.0)
+    else:
+        pos = result[2]
     
     print("Extracted the positions")
     #print(pos)
@@ -78,7 +83,6 @@ def main():
     # Set visual attributes
     
     node_colors = set_node_color(top_k_subgraph,color_by=color_field,colormap=colormap)
-    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 0.1, max_size=800)
     node_labels = set_node_label(top_k_subgraph,label_field = label_field)
     subgraph_pos = get_subgraph_pos(top_k_subgraph,pos)
     edge_colors = edgecolor_by_source(top_k_subgraph,node_colors)
