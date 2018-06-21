@@ -50,8 +50,8 @@ def main():
     # extract the positions
     print("laying out with fa2l...")
     
-    # calculate node sizes
-    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 0.1, max_size=800)
+    # calculate node sizes for whole graph to be used in layout
+    node_sizes = set_node_size(G,size_field= "inlink_count",min_size = 0.1, max_size=800)
     # setting up scale automatic. if search failed then the position is calculated with a default scale.
     # note : set up scale and positions should be calculated in the scale script instead of the visualization script. modify later.
     result = extract_correct_scale(G,node_sizes,10,100)
@@ -81,7 +81,7 @@ def main():
     top_k_subgraph = filter_graph(G,filter_by=filter_field,top=k).to_undirected()
 
     # Set visual attributes
-    
+    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 0.1, max_size=800)
     node_colors = set_node_color(top_k_subgraph,color_by=color_field,colormap=colormap)
     node_labels = set_node_label(top_k_subgraph,label_field = label_field)
     subgraph_pos = get_subgraph_pos(top_k_subgraph,pos)
