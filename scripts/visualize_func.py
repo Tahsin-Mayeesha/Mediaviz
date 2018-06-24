@@ -107,7 +107,7 @@ def draw_force_atlas2_network(G,filename="untitled.png"):
     
     # save the plot
     
-    plt.savefig("1.png")
+    plt.savefig(filename)
     
     # Show the plot
     plt.show()

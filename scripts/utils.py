@@ -239,6 +239,7 @@ def draw_networkx_nodes_custom(G,pos,node_size,node_color='r',alpha = 1, ax=None
     """
     try:
         import matplotlib
+        import matplotlib.pyplot as plt
     except ImportError:
         raise ImportError("Matplotlib required for draw()")
     except RuntimeError:
