@@ -79,7 +79,7 @@ def main():
     
     
     pos = force_atlas2_layout(G,
-                              iterations=500,
+                              iterations=100,
                               pos_list=None,
                               node_masses=None,
                               outbound_attraction_distribution=False,
@@ -89,7 +89,7 @@ def main():
                               jitter_tolerance=1.0,
                               barnes_hut_optimize=True,
                               barnes_hut_theta=1.0,
-                              scaling_ratio=38,
+                              scaling_ratio=40,
                               strong_gravity_mode=False,
                               multithread=False,
                               gravity=1.0)
@@ -103,7 +103,7 @@ def main():
     top_k_subgraph = filter_graph(G,filter_by=filter_field,top=k).to_undirected()
 
     # Set visual attributes
-    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 10, max_size=800)
+    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 10, max_size=700)
     node_colors = set_node_color(top_k_subgraph,color_by=color_field,colormap=colormap)
     node_labels = set_node_label(top_k_subgraph,label_field = label_field)
     subgraph_pos = get_subgraph_pos(top_k_subgraph,pos)

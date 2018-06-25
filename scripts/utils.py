@@ -246,11 +246,6 @@ def draw_networkx_nodes_custom(G,pos,node_size,node_color='r',alpha = 1, ax=None
         print("Matplotlib unable to open display")
         raise
     
-    if pos == None:
-        pos = nx.drawing.spring_layout(G)  # default to spring layout
-        
-    if ax == None:
-        ax = plt.gca()
         
     x =[v[0] for v in pos.values()]
     y =[v[1] for v in pos.values()]

@@ -38,12 +38,12 @@ def main():
                 'center_left':'#00bfff', 
                 'center_right':'#ffebe6', 
                 'left':'#5d5dd5', 
-                'null':'lightgray'}
+                'null':'darkgray'}
     color_field = "partisan_retweet"
     size_field = 'inlink_count'
     filter_field = "inlink_count"
     label_field = "label"
-    num_labels = 50 # number of labels to visualize
+    num_labels = 20 # number of labels to visualize
     k = 100 # number of nodes to visualize
 
     # If the size of Graph > 1000 nodes, set G to the subgraph containing largest 1000 nodes to get the layout
@@ -79,7 +79,7 @@ def main():
     
     
     pos = force_atlas2_layout(G,
-                              iterations=500,
+                              iterations=50,
                               pos_list=None,
                               node_masses=None,
                               outbound_attraction_distribution=False,
@@ -89,7 +89,7 @@ def main():
                               jitter_tolerance=1.0,
                               barnes_hut_optimize=True,
                               barnes_hut_theta=1.0,
-                              scaling_ratio=38,
+                              scaling_ratio=40,
                               strong_gravity_mode=False,
                               multithread=False,
                               gravity=1.0)
@@ -103,7 +103,7 @@ def main():
     top_k_subgraph = filter_graph(G,filter_by=filter_field,top=k).to_undirected()
 
     # Set visual attributes
-    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 10, max_size=800)
+    node_sizes = set_node_size(top_k_subgraph,size_field= "inlink_count",min_size = 10, max_size=500)
     node_colors = set_node_color(top_k_subgraph,color_by=color_field,colormap=colormap)
     node_labels = set_node_label(top_k_subgraph,label_field = label_field)
     subgraph_pos = get_subgraph_pos(top_k_subgraph,pos)
@@ -118,9 +118,9 @@ def main():
     
     # plot the visualization
     
-    fig = plt.figure(figsize=(10,10),dpi=100)
+    fig = plt.figure(figsize=(10,10))
     ax = fig.add_subplot(111)
-    #ax.set(xlim=[0.0, 1.0], ylim=[0.0, 1.0], title='Network Viz')
+    ax.set(xlim=[-10000, 10000], ylim=[-10000, 10000])
 
 
     # Draw the nodes, edges, labels separately 
@@ -128,22 +128,22 @@ def main():
     #nodes = nx.draw_networkx_nodes(top_k_subgraph,pos=subgraph_pos,node_size=node_sizes,node_color=node_colors,             #                               alpha=.7);
     
     draw_networkx_nodes_custom(top_k_subgraph,pos=subgraph_pos,node_size=node_sizes,
-                               node_color=node_colors,ax=ax,alpha=0.5)
-    edges = nx.draw_networkx_edges(top_k_subgraph,pos=subgraph_pos,edge_color=edge_colors,alpha=0.03);
+                               node_color=node_colors,ax=ax,alpha=0.9)
+    edges = nx.draw_networkx_edges(top_k_subgraph,pos=subgraph_pos,edge_color=edge_colors,alpha=0.01);
     labels = nx.draw_networkx_labels(top_k_subgraph,pos=subgraph_pos,labels=subset_labels, font_size=6);
+    #plt.axis('scaled')
+
 
     # Adjust label overlapping
     
     
     x_pos = [v[0] for k,v in subgraph_pos.items()]
     y_pos = [v[1] for k,v in subgraph_pos.items()]
-    adjust_text(texts = list(labels.values()), x = x_pos, y = y_pos,arrowprops=dict(arrowstyle='->', color='lightgray'))
+    adjust_text(texts = list(labels.values()),arrowprops=dict(arrowstyle='->', color='lightgray'))
 
     # Declutter visualization
 
     #ax.axis("off");
-    plt.axis('scaled')
-
     
     # save the plot
     
