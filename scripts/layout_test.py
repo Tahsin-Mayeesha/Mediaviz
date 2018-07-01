@@ -23,7 +23,7 @@ file_names  = ["climate2017","community_policing","deep_state","ebola","gun_viol
                "network_neutrality","teenage_pregnancy","us_election","vaccines"]
 
 for file in file_names:
-    G = nx.read_gexf(file+".gexf")
+    G = nx.read_gexf("data/"+file+".gexf")
     print("CURRENT NETWORK " + file)
     draw_force_atlas2_network(G,file+".png")
 

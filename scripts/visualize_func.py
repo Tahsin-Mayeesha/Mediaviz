@@ -18,6 +18,61 @@ from utils import draw_networkx_nodes_custom
 
 #from scaling import extract_correct_scale
 
+
+import math
+from itertools import combinations
+
+def get_distance(pos1,pos2):
+    """ Returns distance between two points
+    
+    Params : 
+    
+    pos1 : tuple in (x,y) format
+    pos2 : tuple in (x,y) format
+    
+    """
+    return math.sqrt((pos2[0]-pos1[0])**2 + (pos2[1]-pos1[1])**2)
+
+    
+
+def get_pairwise_distance_between_largest_nodes(G,pos,node_sizes,k=20):
+    """ 
+    Boolean. Returns the distances between top k largest nodes
+    Parameters : 
+    ____________
+    
+    G : A graph object
+    pos : dict containing the position of the nodes
+    k : number of nodes to consider    
+    """
+    top_k_nodes = [n[0] for n in sorted(node_sizes.items(),key=lambda x:x[1], reverse = True)[0:k]]
+    top_k_pos = {k:v for k,v in pos.items() if k in top_k_nodes}
+    distances = {}
+    for n1,n2 in combinations(top_k_nodes,2):
+        distances[(n1,n2)]=get_distance(pos[n1],pos[n2])
+            
+    return distances
+
+
+def direct_scaling_ratio(G,pos,node_sizes,ideal_distance = 450,k=20):
+    """ Returns the ratio of the ideal vs current top node distance """
+    result = get_pairwise_distance_between_largest_nodes(G,pos,node_sizes,k=20)
+    current_minimum_top_node_distance = min(result.values())
+    nodes = min(result,key=result.get)
+    ideal_minimum_top_node_distance = node_sizes[nodes[0]] + node_sizes[nodes[1]] + 50
+    return ideal_minimum_top_node_distance/current_minimum_top_node_distance
+    #return ideal_distance/current_minimum_top_node_distance
+    
+
+def scale_layout(pos,scale):
+    
+    """ Scales layout """
+    
+    return { k:(v[0]*scale,v[1]*scale) for k,v in pos.items()}
+
+
+    
+
 def draw_force_atlas2_network(G,filename="untitled.png"):
     # extract the largest weakly connected component and convert to undirected for fa2l
     
@@ -44,34 +99,8 @@ def draw_force_atlas2_network(G,filename="untitled.png"):
 
     # extract the positions
     print("laying out with fa2l...")
-    
-    # calculate node sizes for whole graph to be used in layout
-    sizes = set_node_size(G,size_field= "inlink_count",min_size = 0.1, max_size=200)
-    # setting up scale automatic. if search failed then the position is calculated with a default scale.
-    # note : set up scale and positions should be calculated in the scale script instead of the visualization script. modify later.
-    #result = extract_correct_scale(G,sizes,10,100)
-    #if result[0] == False:
-    #    pos = force_atlas2_layout(G,
-    #                             iterations=50,
-    #                             pos_list=None,
-    #                             node_masses=None,
-    #                             outbound_attraction_distribution=False,
-    #                             lin_log_mode=False,
-    #                             prevent_overlapping=False,
-    #                             edge_weight_influence=1.0,
-    #                             jitter_tolerance=1.0,
-    #                            barnes_hut_optimize=True,
-    #                             barnes_hut_theta=1.0,
-    #                             scaling_ratio=38,
-    #                            strong_gravity_mode=False,
-    #                            multithread=False,
-    #                            gravity=1.0)
-    #else:
-    #    pos = result[2]
-    #    print("scale is" + str(result[2]))
-    
-    print("extracted the positions")
-    pos = force_atlas2_layout(
+        
+    fa2l_pos = force_atlas2_layout(
         G,
         iterations=50,
         pos_list=None,
@@ -88,8 +117,20 @@ def draw_force_atlas2_network(G,filename="untitled.png"):
         multithread=False,
         gravity=1.0)
     
-    #print("Extracted the positions")
+    print("Extracted the positions")
     #print(pos)
+    
+    print("Extracted the positions")
+    # needed to calculate the top 20 largest nodes first
+    original_node_sizes = dict(zip(G.nodes(),set_node_size(G,size_field= "inlink_count",min_size = 0.1, max_size=200)))
+
+    scale = direct_scaling_ratio(G,fa2l_pos,original_node_sizes,k=20)
+    print("scale : " + str(scale))
+    #print(pos)
+    
+    # scaling the position
+    
+    pos = scale_layout(fa2l_pos,scale)
 
     # Extract top k nodes for visualization
     top_k_subgraph = filter_graph(G,filter_by=filter_field,top=k).to_undirected()
