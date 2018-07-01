@@ -58,8 +58,8 @@ def direct_scaling_ratio(G,pos,node_sizes,ideal_distance = 450,k=20):
     current_minimum_top_node_distance = min(result.values())
     nodes = min(result,key=result.get)
     ideal_minimum_top_node_distance = node_sizes[nodes[0]] + node_sizes[nodes[1]] + 50
-    #return ideal_minimum_top_node_distance/current_minimum_top_node_distance
-    return ideal_distance/current_minimum_top_node_distance
+    return ideal_minimum_top_node_distance/current_minimum_top_node_distance
+    #return ideal_distance/current_minimum_top_node_distance
     
 
 def scale_layout(pos,scale):
@@ -104,31 +104,6 @@ def main():
     # extract the positions
     print("laying out with fa2l...")
     
-    # calculate node sizes for whole graph to be used in layout
-    #node_sizes = set_node_size(G,size_field= "inlink_count",min_size = 0.1, max_size=800)
-    # setting up scale automatic. if search failed then the position is calculated with a default scale.
-    # note : set up scale and positions should be calculated in the scale script instead of the visualization script. modify later.
-    #result = extract_correct_scale(G,node_sizes,10,100)
-    #if result[0] == False:
-    #    pos = force_atlas2_layout(G,
-    #                             iterations=50,
-    #                             pos_list=None,
-    #                             node_masses=None,
-    #                             outbound_attraction_distribution=False,
-    #                             lin_log_mode=False,
-    #                             prevent_overlapping=False,
-    #                             edge_weight_influence=1.0,
-    #                             jitter_tolerance=1.0,
-    #                             barnes_hut_optimize=True,
-    #                             barnes_hut_theta=1.0,
-    #                             scaling_ratio=38,
-    #                            strong_gravity_mode=False,
-    #                            multithread=False,
-    #                            gravity=1.0)
-    #else:
-    #    pos = result[2]
-    
-    
     fa2l_pos = force_atlas2_layout(G,
                               iterations=50,
                               pos_list=None,
@@ -148,7 +123,7 @@ def main():
     
     
     print("Extracted the positions")
-    
+    # needed to calculate the top 20 largest nodes first
     original_node_sizes = dict(zip(G.nodes(),set_node_size(G,size_field= "inlink_count",min_size = 0.1, max_size=200)))
 
     scale = direct_scaling_ratio(G,fa2l_pos,original_node_sizes,k=20)
