@@ -13,5 +13,31 @@ setuptools.setup(name='mediaviz',
       author_email='tasmiah.tahsin@hotmail.com',
       license='MIT',
       packages=setuptools.find_packages(),
+      classifiers=[
+        'Development Status :: 5 - Production/Stable',
 
+        'Intended Audience :: Science/Research',
+        'Topic :: Scientific/Engineering :: Mathematics',
+
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6'
+    ],
+
+    install_requires=[ "fa2l",
+        "networkx<2.0.0",
+        "numpy", "matplotlib"
+    ],
+
+    setup_requires=[
+        'pytest-runner'
+    ],
+    tests_require=[
+        'pytest',
+    ],
+     
       zip_safe=False)

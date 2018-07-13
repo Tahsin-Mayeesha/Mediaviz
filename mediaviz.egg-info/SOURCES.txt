@@ -9,4 +9,5 @@ mediaviz.egg-info/PKG-INFO
 mediaviz.egg-info/SOURCES.txt
 mediaviz.egg-info/dependency_links.txt
 mediaviz.egg-info/not-zip-safe
+mediaviz.egg-info/requires.txt
 mediaviz.egg-info/top_level.txt
