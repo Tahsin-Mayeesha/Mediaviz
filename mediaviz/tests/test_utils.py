@@ -1,17 +1,42 @@
 import pytest
+import os
+import networkx as nx
+from mediaviz.utils import set_node_color,set_node_size
+
+
+fname = os.path.join(os.path.dirname(__file__), 'deep_state_500.gexf')
+G = nx.read_gexf(fname)
+
 
 def test_set_node_color():
+    colormap = {"right":'#e62e00',
+                'center':'#ace600', 
+                'center_left':'#00bfff', 
+                'center_right':'#ffebe6', 
+                'left':'#5d5dd5', 
+                'null':'lightgray'}
+    color_field = "partisan_retweet"
+    node_colors = set_node_color(G,color_by=color_field,colormap=colormap)
     # check for empty list
+    assert len(node_colors)>=1
     # check if the output list length is equal to number of nodes in graph
-    # check if there's any null values after setting the colormap
-    pass
+    assert len(node_colors) == len(G.nodes())
+    # assert there's no null value in the node colors
+    assert None not in node_colors
 
 
 def test_set_node_size():
+    size_field = "inlink_count"
+    min_size = 10
+    max_size = 100
+    node_sizes = set_node_size(G,size_field= size_field,min_size = min_size, max_size=max_size)
     # check for empty list
+    assert len(node_sizes)>=1
     # check if the output list length is equal to the number of nodes in graph
+    assert len(node_sizes) == len(G.nodes())
     # check if minimum and maxium values of the output is within the range given
-    pass       
+    assert max(node_sizes) <= max_size and min(node_sizes) >= min_size
+    # check if error is raised when the size_field is not in node attributes
 
 
 def test_filter_graph():
