@@ -21,6 +21,21 @@ This repository is for my project [Automating Network Visualization and communit
 
 # Usage
 
+* Draw a Network with Force Atlas 2 Layout With Default Parameters
+
+```python
+import networkx as nx
+import os
+from mediaviz.visualize import draw_forceatlas2_network
+
+fname = os.path.join(os.path.dirname(__file__), 'graphname.gexf')
+G = nx.read_gexf(fname)
+
+draw_forceatlas2_network(G)
+```
+
+
+
 * Drawing a Network with Force Atlas 2 Layout with customized colormap, node size and labels
 * Drawing a Network With Community Detection and Coloring
 * Using the utility functions 
