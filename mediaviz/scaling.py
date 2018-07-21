@@ -7,6 +7,9 @@ Created on Thu Jul 12 20:25:32 2018
 
 import math
 from itertools import combinations
+from fa2l import force_atlas2_layout
+import networkx as nx
+
 
 def get_distance(pos1,pos2):
     """ Returns distance between two points
@@ -47,7 +50,6 @@ def direct_scaling_ratio(G,pos,node_sizes,ideal_distance = 450,k=20):
     nodes = min(result,key=result.get)
     ideal_minimum_top_node_distance = node_sizes[nodes[0]] + node_sizes[nodes[1]] + 50
     return ideal_minimum_top_node_distance/current_minimum_top_node_distance
-    #return ideal_distance/current_minimum_top_node_distance
     
 
 def scale_layout(pos,scale):
@@ -55,3 +57,4 @@ def scale_layout(pos,scale):
     """ Scales layout """
     
     return { k:(v[0]*scale,v[1]*scale) for k,v in pos.items()}
+

@@ -39,8 +39,8 @@ def draw_forceatlas2_network(G,filename="untitled.png"):
     k = 100 # number of nodes to visualize
 
     # If the size of Graph > 1000 nodes, set G to the subgraph containing largest 1000 nodes to get the layout
-    
-    G = filter_graph(G,filter_by=filter_field,top=1000).to_undirected()
+    if len(G.nodes()) > 1000:
+        G = filter_graph(G,filter_by=filter_field,top=1000).to_undirected()
 
     # extract the positions
     print("laying out with fa2l...")
