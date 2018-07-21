@@ -1,3 +1,4 @@
+
 def set_node_color(G,color_by,colormap=None):
     """ 
     Returns a list of colors for each node based on the provided colormap. 
@@ -104,13 +105,13 @@ def filter_graph(G,filter_by=None,top=None):
     >>> filter_field = "inlink_count"
     >>> filter_graph(G,filter_by=filter_field,top=k)
 
-    
-    
     """
-    
-    filter = {n[0]:n[1][filter_by] for n in G.nodes(data=True)}
-    filter_nodes = sorted(filter.items(), key=lambda x: x[1],reverse=True)[0:top]
-    return G.subgraph([n[0] for n in filter_nodes])
+    if top <= len(G.nodes()):
+        filter = {n[0]:n[1][filter_by] for n in G.nodes(data=True)}
+        filter_nodes = sorted(filter.items(), key=lambda x: x[1],reverse=True)[0:top]
+        return G.subgraph([n[0] for n in filter_nodes])
+    else:
+        raise ValueError("Subgraph can't contain more nodes than original graph")
 
 def set_node_label(G,label_field):
     """ Returns a dict mapping nodes to the labels. Used in visualization functions like nx.draw_networkx_labels.
@@ -183,47 +184,7 @@ def get_subgraph_pos(G,pos):
     """
     return {k:v for k,v in pos.items() if k in G.nodes()}
 
-def rotate(point, angle, origin = (0,0)):
-    """
-    Rotate a point counterclockwise by a given angle around a given origin.
 
-    The angle should be given in radians. Helper function for rotating a layout.
-    
-    Parameters : 
-    ____________
-    
-    point : tuple in (x,y) form
-    angle : angle in radians
-    origin : point will rotate with respect to the origin.
-    
-    """
-    ox, oy = origin
-    px, py = point
-    angle = math.radians(angle)
-
-    qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
-    qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
-    return qx, qy
-
-# rotation example  : pos2 = {k:rotate(v,45,(0.5,0.5)) for k,v in pos2.items()}
-
-def rotation_layout(pos,angle,origin=(0,0)):
-    
-    """ Rotates the pos to the given angle with respect to origin.
-    
-    Parameters : 
-    ____________
-    
-    pos : A dictionary with nodes as keys and positions as values.
-    
-    angle : angle in radians
-    
-    origin : point will rotate with respect to the origin.
-
-    
-    
-    """
-    return { k:rotate(v,angle,origin) for k,v in pos.items()}
 
 
 def draw_networkx_nodes_custom(G,pos,node_size,node_color='r',alpha = 1, ax=None, **kwds):
