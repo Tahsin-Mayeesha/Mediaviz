@@ -187,7 +187,7 @@ def get_subgraph_pos(G,pos):
 
 
 
-def draw_networkx_nodes_custom(G,pos,node_size,node_color='r',alpha = 1, ax=None, **kwds):
+def draw_networkx_nodes_custom(G,pos,node_size,node_color='r',alpha = 1, ax=None, **kwargs):
     """ Draws networkx graph nodes with circles instead of using scatter function like draw_networkx_nodes
     
     G: A networkx graph object.
@@ -214,7 +214,7 @@ def draw_networkx_nodes_custom(G,pos,node_size,node_color='r',alpha = 1, ax=None
     patches = [plt.Circle((x,y),radius=s) for x,y,s in zip(x,y,node_size)]
     
     
-    coll = matplotlib.collections.PatchCollection(patches,color=node_color,alpha=alpha,**kwds)
+    coll = matplotlib.collections.PatchCollection(patches,color=node_color,alpha=alpha,**kwargs)
     ax.add_collection(coll)
 
     #ax.margins(0.01)    

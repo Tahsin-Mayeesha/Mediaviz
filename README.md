@@ -36,8 +36,25 @@ draw_forceatlas2_network(G)
 
 
 
-* Drawing a Network with Force Atlas 2 Layout with customized colormap, node size and labels
-* Drawing a Network With Community Detection and Coloring
+* Drawing Network with Force Atlas 2 Layout with customized colormap, node size and labels
+* Drawing Network With Community Detection and Coloring
+* Only Using Draw Function for Customized Visualization
+
+```python
+import networkx as nx
+from mediaviz.draw import draw_networkx_graph_customized
+
+G = nx.karate_club_graph()
+
+draw_networkx_graph_customized(G,node_sizes=0.01,
+							color_by="club",
+							colormap={"Officer":"r","Mr. Hi":"b"},
+                               node_opacity=1,edge_opacity=1, 
+                               figsize=(10,10), edge_color="lightgray")
+```
+
+![](assets/only_drawing.png)
+
 * Using the utility functions 
 
 
