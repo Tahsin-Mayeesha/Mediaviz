@@ -47,8 +47,7 @@ from mediaviz.draw import draw_networkx_graph_customized
 G = nx.karate_club_graph()
 
 draw_networkx_graph_customized(G,node_sizes=0.01,
-							color_by="club",
-							colormap={"Officer":"r","Mr. Hi":"b"},
+							color_by="club", colormap={"Officer":"r","Mr. Hi":"b"},
                                node_opacity=1,edge_opacity=1, 
                                figsize=(10,10), edge_color="lightgray")
 ```
