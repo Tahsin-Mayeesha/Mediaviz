@@ -1,9 +1,10 @@
 import pytest
-
+from mediaviz.scaling import *
 
 def test_get_distance():
-    pass
-    # test with random point
+    # check with random test points
+    assert get_distance((0,0),(0,1)) == 1
+    assert get_distance((0,0),(0,0)) == 0
     
 
 def test_get_pairwise_distance_between_largest_nodes():

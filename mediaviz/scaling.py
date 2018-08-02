@@ -36,7 +36,7 @@ def get_pairwise_distance_between_largest_nodes(G, pos, node_sizes, k=20):
     return distances
 
 
-def direct_scaling_ratio(G, pos, node_sizes, ideal_distance=450, k=20):
+def get_auto_scale(G, pos, node_sizes, k=20):
     """ Returns the ratio of the ideal vs current top node distance """
     result = get_pairwise_distance_between_largest_nodes(
         G, pos, node_sizes, k=20)

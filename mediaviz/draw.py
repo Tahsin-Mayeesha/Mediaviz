@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 from adjustText import adjust_text
 import networkx as nx
-from .utils import set_node_size, set_node_color, set_node_label
-from .utils import edgecolor_by_source, filter_graph, get_subgraph_pos
-from .utils import draw_networkx_nodes_custom
+from utils import set_node_size, set_node_color, set_node_label
+from utils import edgecolor_by_source, filter_graph, get_subgraph_pos
+from utils import draw_networkx_nodes_custom
 
 
 def draw_networkx_graph_customized(
@@ -86,6 +86,8 @@ def draw_networkx_graph_customized(
     # add title
     if title:
         plt.title(title)
+
+    ax.axis("off");
     # save the plot
 
     plt.savefig(filename)
