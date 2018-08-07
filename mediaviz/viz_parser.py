@@ -34,7 +34,7 @@ def parse_size(path):
     for node in nodes:
         id = node.attrib['id']
         size = node.findall('./{http://www.gexf.net/1.1draft/viz}size')[0].attrib
-        sizes[id]=size['value']
+        sizes[id]=int(size['value'])
     return sizes
 
 
