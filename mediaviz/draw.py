@@ -1,13 +1,14 @@
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from fa2l import force_atlas2_layout
 from adjustText import adjust_text
 import networkx as nx
+
 from utils import set_node_size, set_node_color, set_node_label
 from utils import edgecolor_by_source, filter_graph, get_subgraph_pos
 from utils import draw_networkx_nodes_custom
 from scaling import get_auto_scale, scale_layout
-
-
 
 def draw_forceatlas2_network(
         G,
@@ -23,7 +24,8 @@ def draw_forceatlas2_network(
         font_size=8,
         filename="untitled.png", title=None,
         edge_color_by_source=False,
-        figsize=(10, 10), edge_color=None, **kwargs):
+        figsize=(10, 10), edge_color=None,
+        **kwargs):
     
     if type(G) == nx.DiGraph:
         G = max(nx.weakly_connected_component_subgraphs(G), key=len).to_undirected()
@@ -82,12 +84,16 @@ def draw_forceatlas2_network(
     if edge_color_by_source:
         edge_color = edgecolor_by_source(G, node_colors)
 
-    if with_labels:
+    if with_labels and label_field:
         node_labels = set_node_label(G, label_field=label_field)
         subset_label_nodes = sorted(zip(G.nodes(), node_sizes),
                                     key=lambda x: x[1],
                                     reverse=True)[0:num_labels]
         subset_labels = {n[0]: node_labels[n[0]] for n in subset_label_nodes}
+        
+    if with_labels and label_field is None:
+        subset_labels = dict((n, n) for n in G.nodes())
+
 
     # plot the visualization
 
@@ -116,9 +122,8 @@ def draw_forceatlas2_network(
             adjust_text(
                 texts=list(labels.values()),
                 x=x_pos,
-                y=y_pos,
-                arrowprops=dict(arrowstyle='->', color='lightgray')
-            )
+                y=y_pos)
+        
 
     # add title
     if title:
