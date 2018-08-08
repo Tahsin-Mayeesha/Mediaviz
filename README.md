@@ -50,6 +50,9 @@ draw_forceatlas2_network(G)
 
 
 * Drawing Network with Force Atlas 2 Layout with customized colormap, node size and labels
+
+
+
 * Drawing Network With Community Detection and Coloring
 
 ```python

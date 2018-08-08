@@ -5,16 +5,16 @@ from fa2l import force_atlas2_layout
 from adjustText import adjust_text
 import networkx as nx
 
-from utils import set_node_size, set_node_color, set_node_label
-from utils import edgecolor_by_source, filter_graph, get_subgraph_pos
-from utils import draw_networkx_nodes_custom
-from scaling import get_auto_scale, scale_layout
+from .utils import set_node_size, set_node_color, set_node_label
+from .utils import edgecolor_by_source, filter_graph, get_subgraph_pos
+from .utils import draw_networkx_nodes_custom
+from .scaling import get_auto_scale, scale_layout
 
 def draw_forceatlas2_network(
         G,
         pos=None, fa2l_iterations = 50, fa2l_scaling_ratio = 38,
         scale = "auto",
-        num_nodes=None, num_labels=None,
+        num_labels=None,
         node_colors=None, color_by=None, colormap=None, node_sizes=None,
         size_field=None, min_size=0.1, max_size=100,
         with_labels=False, label_field=None,
@@ -23,8 +23,9 @@ def draw_forceatlas2_network(
         node_opacity=0.5, edge_opacity=0.01,
         font_size=8,
         filename="untitled.png", title=None,
+        edge_color=None,
         edge_color_by_source=False,
-        figsize=(10, 10), edge_color=None,
+        figsize=(10, 10), 
         **kwargs):
     
     if type(G) == nx.DiGraph:
@@ -63,8 +64,6 @@ def draw_forceatlas2_network(
         pos = scale_layout(pos,scale)
         
     
-    if num_nodes is None:
-        num_nodes = len(G.nodes())
     if with_labels is True and num_labels is None:
         num_labels = len(G.nodes())
 
@@ -79,7 +78,7 @@ def draw_forceatlas2_network(
         node_sizes = set_node_size(
             G, size_field=size_field, min_size=min_size, max_size=max_size)
     elif type(node_sizes) == int or type(node_sizes) == float:
-        node_sizes = [node_sizes]*num_nodes
+        node_sizes = [node_sizes]*len(G.nodes())
         
     if edge_color_by_source:
         edge_color = edgecolor_by_source(G, node_colors)
@@ -129,7 +128,7 @@ def draw_forceatlas2_network(
     if title:
         plt.title(title)
 
-    ax.axis("off");
+    ax.axis("off")
     # save the plot
 
     plt.savefig(filename)

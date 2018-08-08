@@ -3,19 +3,23 @@ import os
 import networkx as nx
 from mediaviz.utils import *
 
+def generate_fake_data():
+    G= nx.Graph()
+    G.add_node('1', partisan_retweet="right", inlink_count=15,label="Youtube")
+    G.add_node('2', partisan_retweet="left", inlink_count=35,label="Facebook")
+    G.add_node('3', partisan_retweet="right", inlink_count=70,label="Twitter")
+    G.add_node('4', partisan_retweet="left", inlink_count=90,label="New York Times")
+    G.add_edges_from([('1','2'),('1','3'),('2','4'),('3','4'),('1','4'),('2','3')])
+    return G
+    
 
-fname = os.path.join(os.path.dirname(__file__), 'deep_state_500.gexf')
-G = nx.read_gexf(fname)
-
+G = generate_fake_data()
 
 def test_set_node_color():
 
     colormap = {"right":'#e62e00',
-                'center':'#ace600', 
-                'center_left':'#00bfff', 
-                'center_right':'#ffebe6', 
-                'left':'#5d5dd5', 
-                'null':'lightgray'}
+                'left':'#5d5dd5' 
+                }
     color_field = "partisan_retweet"
     node_colors = set_node_color(G,color_by=color_field,colormap=colormap)
     # check for empty list
@@ -46,7 +50,7 @@ def test_set_node_size():
 
 
 def test_filter_graph():
-    k = 50
+    k = 2
     sub_G = filter_graph(G,filter_by="inlink_count",top=k)
     # check if it returns a graph
     assert type(sub_G) == type(G)
@@ -71,11 +75,8 @@ def test_set_node_label():
 
 def test_edgecolor_by_source():
     colormap = {"right":'#e62e00',
-                'center':'#ace600', 
-                'center_left':'#00bfff', 
-                'center_right':'#ffebe6', 
-                'left':'#5d5dd5', 
-                'null':'lightgray'}
+                'left':'#5d5dd5' 
+                }
     color_field = "partisan_retweet"
     node_colors = set_node_color(G,color_by=color_field,colormap=colormap)
     edge_colors = edgecolor_by_source(G,node_colors)

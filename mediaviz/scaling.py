@@ -28,7 +28,6 @@ def get_pairwise_distance_between_largest_nodes(G, pos, node_sizes, k=20):
     """
     top_k_nodes = [n[0] for n in sorted(
         node_sizes.items(), key=lambda x:x[1], reverse=True)[0:k]]
-    top_k_pos = {k: v for k, v in pos.items() if k in top_k_nodes}
     distances = {}
     for n1, n2 in combinations(top_k_nodes, 2):
         distances[(n1, n2)] = get_distance(pos[n1], pos[n2])
