@@ -11,11 +11,11 @@ def convert_rgb_to_hex(color_code):
 def parse_colors(path,hex=False):
     tree = ElementTree(file=path)
     root = tree.getroot()
-    nodes = root.findall('./{http://www.gexf.net/1.2draft}graph/{http://www.gexf.net/1.2draft}nodes/')
+    nodes = [child for child in root.iter() if "nodes" in child.tag ][0]
     color_codes = {}
     for node in nodes:
         id = node.attrib['id']
-        color_code = node.findall('./{http://www.gexf.net/1.1draft/viz}color')[0].attrib
+        color_code = [child for child in node if "color" in child.tag][0].attrib
         if hex:
             hex_code = convert_rgb_to_hex(color_code)
             color_codes[id] = hex_code
@@ -29,12 +29,12 @@ def parse_colors(path,hex=False):
 def parse_size(path):
     tree = ElementTree(file=path)
     root = tree.getroot()
-    nodes = root.findall('./{http://www.gexf.net/1.2draft}graph/{http://www.gexf.net/1.2draft}nodes/')
+    nodes = [child for child in root.iter() if "nodes" in child.tag ][0]
     sizes = {}
     for node in nodes:
         id = node.attrib['id']
-        size = node.findall('./{http://www.gexf.net/1.1draft/viz}size')[0].attrib
-        sizes[id]=int(size['value'])
+        size = [child for child in node if "size" in child.tag][0].attrib
+        sizes[id]=float(size['value'])
     return sizes
 
 
@@ -43,10 +43,10 @@ def parse_size(path):
 def parse_position(path):
     tree = ElementTree(file=path)
     root = tree.getroot()
-    nodes = root.findall('./{http://www.gexf.net/1.2draft}graph/{http://www.gexf.net/1.2draft}nodes/')
+    nodes = [child for child in root.iter() if "nodes" in child.tag ][0]
     positions = {}
     for node in nodes:
         id = node.attrib['id']
-        position = node.findall('./{http://www.gexf.net/1.1draft/viz}position')[0].attrib
-        positions[id]= (position['x'],position['y'])
+        position = [child for child in node if "position" in child.tag][0].attrib
+        positions[id]= (float(position['x']),float(position['y']))
     return positions
