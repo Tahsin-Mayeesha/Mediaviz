@@ -15,7 +15,9 @@ def draw_forceatlas2_network(
         pos=None, fa2l_iterations = 50, fa2l_scaling_ratio = 38,
         scale = "auto",
         num_labels=None,
-        node_colors=None, color_by=None, colormap=None, node_sizes=None,
+        node_list = None,
+        node_colors=None, color_by=None, colormap=None, 
+        node_sizes=None,
         size_field=None, min_size=0.1, max_size=100,
         with_labels=False, label_field=None,
         filter_by=None, top=None,
@@ -28,8 +30,14 @@ def draw_forceatlas2_network(
         figsize=(10, 10), 
         **kwargs):
     
+    if node_list:
+        G = nx.subgraph(node_list)
+    
+    
     if type(G) == nx.DiGraph:
         G = max(nx.weakly_connected_component_subgraphs(G), key=len).to_undirected()
+
+    
 
 
     if pos is None:        
