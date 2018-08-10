@@ -1,3 +1,7 @@
+
+
+
+
 # Mediaviz
 
 This repository is for my project [Automating Network Visualization and community detection of Media Sources Network from Mediacloud data.](https://summerofcode.withgoogle.com/projects/#6265196406898688)  with Google Summer Of Code 2018. The goal is to create network visualizations with force atlas 2 layout and appropriate visual aesthetics on top of python's popular network analysis library networkx. 
@@ -13,13 +17,33 @@ See blog posts related to the project in the following links.
 
 
 
+
+
+
+
 # Installation
 
+To install the package from pip :
+
+```python
+pip install mediaviz
+```
+
+To build from source , download the repository and go to the Mediaviz top level directory. Then use
+
+```python
+python setup.py install 
+```
+
+or 
+
+```python
+pip install .
+```
 
 
 
-
-# Dependencies : 
+# Dependencies  
 
 * [networkx](https://networkx.github.io)
 
@@ -34,26 +58,52 @@ See blog posts related to the project in the following links.
 
 # Usage
 
-* Draw a Network with Force Atlas 2 Layout With Default Parameters
+####  Draw a Network with Force Atlas 2 Layout With Default Parameters
 
 ```python
 import networkx as nx
-import os
-from mediaviz.visualize import draw_forceatlas2_network
+from mediaviz.draw import draw_forceatlas2_network
 
-fname = os.path.join(os.path.dirname(__file__), 'graphname.gexf')
-G = nx.read_gexf(fname)
+path= 'graphname.gexf'
+G = nx.erdos_renyi_graph(200,0.7)
 
-draw_forceatlas2_network(G)
+draw_forceatlas2_network(G,node_colors='purple', node_sizes=10, edge_color='gray',filename="random.png")
 ```
 
+![](assets/random.png)
+
+#### Drawing Network with Force Atlas 2 Layout with customization
+
+Here we parse color codes from .gexf visual attributes.
+
+```python
+import networkx as nx
+from mediaviz.draw import draw_forceatlas2_network
+from mediaviz.viz_parser import parse_colors, parse_size
+
+# 1000 node graph from mediacloud on network neutrality topic
+path = "network_neutrality.gexf" 
+G = nx.read_gexf(path)
+node_colors = list(parse_colors(path,hex=True).values())
+draw_forceatlas2_network(G,
+     num_labels = 30, # num_labels indicates to only label top 30 largest nodes by node_size
+     fa2l_scaling_ratio=40,fa2l_iterations=100, # parameters for the force atlas 2 layout
+     node_colors = node_colors, 
+     with_labels=True, label_field="label",
+     filter_by="inlink_count", top=200, # filter to get top 200 nodes sorted by inlink_count
+     size_field = "inlink_count",min_size=0.1,max_size=200, # resize by inlink_count
+     adjust_labels=True, # adjusts labels to prevent label overlap
+     node_opacity=0.8, edge_opacity=0.01, 
+     font_size=6, # size of label font_size 
+     filename= "network_neutrality.png", title="network_neutrality",
+     edge_color_by_source=True)
+```
+
+![](assets/network_neutrality.png)
 
 
-* Drawing Network with Force Atlas 2 Layout with customized colormap, node size and labels
 
-
-
-* Drawing Network With Community Detection and Coloring
+#### Drawing Network With Community Detection and Coloring By Community Partitions
 
 ```python
 import community
@@ -79,7 +129,7 @@ draw_forceatlas2_network(
 
 ![ ](assets/community.png)
 
-* Only Using Draw Function for Customized Visualization With Other Layout Algorithms
+#### Only Using Draw Function for Customized Visualization With Other Layout Algorithms
 
 ```python
 import networkx as nx
@@ -99,8 +149,13 @@ draw_forceatlas2_network(G,
 
 # Documentation
 
-* Core Drawing Functions
-* Utilities 
+### Core Drawing Function
+
+Draw_forceatlas2_network
+
+
+
+### Utilities 
 
 
 

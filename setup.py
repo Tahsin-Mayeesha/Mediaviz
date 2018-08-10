@@ -30,14 +30,14 @@ setuptools.setup(name='mediaviz',
 
     install_requires=[ "fa2l",
         "networkx<2.0.0",
-        "numpy", "matplotlib"
+        "numpy", "matplotlib",'python-louvain'
     ],
 
     setup_requires=[
         'pytest-runner'
     ],
     tests_require=[
-        'pytest',
+        'pytest'
     ],
      
       zip_safe=False)

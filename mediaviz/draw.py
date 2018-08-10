@@ -16,18 +16,18 @@ def draw_forceatlas2_network(
         scale = "auto",
         num_labels=None,
         node_list = None,
-        node_colors=None, color_by=None, colormap=None, 
-        node_sizes=None,
+        node_color='red', color_by=None, colormap=None, 
+        node_size=10,
         size_field=None, min_size=0.1, max_size=100,
         with_labels=False, label_field=None,
         filter_by=None, top=None,
         adjust_labels=True,
-        node_opacity=0.5, edge_opacity=0.01,
-        font_size=8,
+        node_opacity=1, edge_opacity=0.05,
+        font_size=8, font_color='k', font_family='sans-serif',
         filename="untitled.png", title=None,
-        edge_color=None,
+        edge_color="lightgray",
         edge_color_by_source=False,
-        figsize=(10, 10), 
+        figsize=(10, 10), fig_dpi=100,
         **kwargs):
     
     if node_list:
@@ -61,10 +61,10 @@ def draw_forceatlas2_network(
     if scale == "auto":
         if size_field:
             original_node_sizes = dict(zip(G.nodes(), set_node_size(G, size_field=size_field, min_size=min_size, max_size=max_size)))
-        elif type(node_sizes) == int or type(node_sizes) == float:
-            original_node_sizes = dict(zip(G.nodes(),[node_sizes]*len(G.nodes())))
+        elif type(node_size) == int or type(node_size) == float:
+            original_node_sizes = dict(zip(G.nodes(),[node_size]*len(G.nodes())))
         else:
-            original_node_sizes = dict(zip(G.nodes(),node_sizes))
+            original_node_sizes = dict(zip(G.nodes(),node_size))
         scale = get_auto_scale(G,pos, original_node_sizes, k=20)
         print("scale is " + str(scale))
         pos = scale_layout(pos,scale)
@@ -76,24 +76,24 @@ def draw_forceatlas2_network(
         num_labels = len(G.nodes())
 
     if filter_by:
-        G = filter_graph(G, filter_by=filter_by, top=top).to_undirected()
+        G = filter_graph(G, filter_by=filter_by, top=top)
         pos = get_subgraph_pos(G, pos)
 
     if color_by:
-        node_colors = set_node_color(G, color_by=color_by, colormap=colormap)
+        node_color = set_node_color(G, color_by=color_by, colormap=colormap)
 
     if size_field:
-        node_sizes = set_node_size(
+        node_size = set_node_size(
             G, size_field=size_field, min_size=min_size, max_size=max_size)
-    elif type(node_sizes) == int or type(node_sizes) == float:
-        node_sizes = [node_sizes]*len(G.nodes())
+    elif type(node_size) == int or type(node_size) == float:
+        node_size = [node_size]*len(G.nodes())
         
     if edge_color_by_source:
-        edge_color = edgecolor_by_source(G, node_colors)
+        edge_color = edgecolor_by_source(G, node_color)
 
     if with_labels and label_field:
         node_labels = set_node_label(G, label_field=label_field)
-        subset_label_nodes = sorted(zip(G.nodes(), node_sizes),
+        subset_label_nodes = sorted(zip(G.nodes(), node_size),
                                     key=lambda x: x[1],
                                     reverse=True)[0:num_labels]
         subset_labels = {n[0]: node_labels[n[0]] for n in subset_label_nodes}
@@ -104,14 +104,14 @@ def draw_forceatlas2_network(
 
     # plot the visualization
 
-    fig = plt.figure(figsize=figsize, **kwargs)
+    fig = plt.figure(figsize=figsize,dpi=fig_dpi, **kwargs)
     ax = fig.add_subplot(111)
 
     # Draw the nodes, edges, labels separately
 
     draw_networkx_nodes_custom(G,
-                               pos=pos, node_size=node_sizes,
-                               node_color=node_colors,
+                               pos=pos, node_size=node_size,
+                               node_color=node_color,
                                ax=ax,
                                alpha=node_opacity,
                                **kwargs)
@@ -121,7 +121,8 @@ def draw_forceatlas2_network(
 
     if with_labels:
         labels = nx.draw_networkx_labels(
-            G, pos=pos, labels=subset_labels, font_size=font_size, **kwargs)
+            G, pos=pos, labels=subset_labels, font_size=font_size, 
+            font_color=font_color, font_family=font_family,**kwargs)
         if adjust_labels:
             # Adjust label overlapping
             x_pos = [v[0] for k, v in pos.items()]
