@@ -8,12 +8,6 @@ def generate_fake_graph():
     G = nx.barbell_graph(4,1) # create a barbell graph because they have good community structure 
     return G
 
-def test_generate_random_hex_color():
-    color = generate_random_hex_color()
-    # check if it's a 6 digit hex code including '#'
-    assert len(color)==7
-    # check if the first character is '#' for the hex code
-    assert color[0] == '#'
     
 
 def test_get_community_graph():

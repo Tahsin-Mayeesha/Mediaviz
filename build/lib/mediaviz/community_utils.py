@@ -2,14 +2,14 @@ import random
 import networkx as nx
 import community
 
-def _generate_random_hex_color():
+def generate_random_hex_color():
     r = lambda: random.randint(0,255)
     return '#%02X%02X%02X' % (r(),r(),r())
 
 
 def get_community_colormap(partition):
     partitions = set(partition.values())
-    result = {p:_generate_random_hex_color() for p in partitions}
+    result = {p:generate_random_hex_color() for p in partitions}
     return result
 
 def get_community_graph(G):

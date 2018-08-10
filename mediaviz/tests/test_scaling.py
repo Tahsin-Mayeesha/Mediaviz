@@ -10,16 +10,6 @@ def generate_fake_data():
 
 G, pos, node_sizes = generate_fake_data()
 
-def test_get_distance():
-    # check with random test points
-    assert get_distance((0,0),(0,1)) == 1
-    assert get_distance((0,0),(0,0)) == 0
-    
-
-def test_get_pairwise_distance_between_largest_nodes():
-    result = get_pairwise_distance_between_largest_nodes(G, pos, node_sizes)
-    # test for null values
-    assert None not in result.values()
 
 def test_get_auto_scale():
    

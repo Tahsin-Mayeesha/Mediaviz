@@ -1,17 +1,7 @@
 
 import numpy as np
 import pytest
-from mediaviz.rotation import rotate,rotation_layout
-
-def test_rotate():
-    # check with well known points and rotations
-    result1 = rotate(point=(1,1),angle=180, origin = (0,0))
-    result2 = rotate(point=(1,0),angle=90, origin = (0,0))
-    # note : rounding in the function may harm the layout positions from fa2l by reducing precision, so
-    # rounding in the test
-    assert np.all(np.round(result1)==np.array([-1.,-1.]))
-    assert np.all(np.round(result2)==np.array([0.,1.]))
-    
+from mediaviz.rotation import rotation_layout
 
 def test_rotation_layout():
     # make fake pos dictionary with known points

@@ -4,7 +4,7 @@ from fa2l import force_atlas2_layout
 import networkx as nx
 
 
-def _get_distance(pos1, pos2):
+def get_distance(pos1, pos2):
     """ Returns distance between two points
 
     Params : 
@@ -16,7 +16,7 @@ def _get_distance(pos1, pos2):
     return math.sqrt((pos2[0]-pos1[0])**2 + (pos2[1]-pos1[1])**2)
 
 
-def _get_pairwise_distance_between_largest_nodes(G, pos, node_sizes, k=20):
+def get_pairwise_distance_between_largest_nodes(G, pos, node_sizes, k=20):
     """ 
     Boolean. Returns the distances between top k largest nodes
     Parameters : 
@@ -30,14 +30,14 @@ def _get_pairwise_distance_between_largest_nodes(G, pos, node_sizes, k=20):
         node_sizes.items(), key=lambda x:x[1], reverse=True)[0:k]]
     distances = {}
     for n1, n2 in combinations(top_k_nodes, 2):
-        distances[(n1, n2)] = _get_distance(pos[n1], pos[n2])
+        distances[(n1, n2)] = get_distance(pos[n1], pos[n2])
 
     return distances
 
 
 def get_auto_scale(G, pos, node_sizes, k=20):
     """ Returns the ratio of the ideal vs current top node distance """
-    result = _get_pairwise_distance_between_largest_nodes(
+    result = get_pairwise_distance_between_largest_nodes(
         G, pos, node_sizes, k=20)
     current_minimum_top_node_distance = min(result.values())
     nodes = min(result, key=result.get)

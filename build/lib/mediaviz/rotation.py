@@ -1,22 +1,18 @@
-def _rotate(point, angle, origin = (0,0),unit = 'degree'):
-    """Rotate a point counterclockwise by a given angle around a given origin.
+def rotate(point, angle, origin = (0,0),unit = 'degree'):
+    """
+    Rotate a point counterclockwise by a given angle around a given origin.
 
     Angle can be both in radian or degree. Helper function for rotating a layout.
-
-    Parameters
-    ----------
+    
+    Parameters : 
+    ____________
+    
     point : tuple in (x,y) form
-        Description of arg1
-    angle : angle to rotate the point
-    origin : tuple in (x,y) form
-        point will rotate with respect to the origin.
-    unit : 'degree'/'radian' to indicate if the angle is in degrees or radians. 
-        if given in degrees angle is converted to radians.
-
-
-    Returns
-    -------
-    rotated point as (x,y) tuple.
+    angle : angle in degrees
+    origin : point will rotate with respect to the origin.
+    unit : 'degree' or 'radian' to indicate if the angle is in degrees or radians. if given in 
+            degrees we convert it to radians.
+    
     """
     import math
     ox, oy = origin
@@ -47,4 +43,4 @@ def rotation_layout(pos,angle,origin=(0,0),unit="degree"):
     
     
     """
-    return { k:_rotate(v,angle,origin,unit) for k,v in pos.items()}
+    return { k:rotate(v,angle,origin,unit) for k,v in pos.items()}
