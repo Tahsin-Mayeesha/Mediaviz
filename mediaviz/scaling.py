@@ -19,12 +19,18 @@ def _get_distance(pos1, pos2):
 def _get_pairwise_distance_between_largest_nodes(G, pos, node_sizes, k=20):
     """ 
     Boolean. Returns the distances between top k largest nodes
-    Parameters : 
-    ____________
+
+    Parameters  
+    ----------
 
     G : A graph object
     pos : dict containing the position of the nodes
-    k : number of nodes to consider    
+    k : number of nodes to consider
+
+    Returns 
+    -------
+
+    Returns the dictionary containing the distance between the top k largest nodes.  
     """
     top_k_nodes = [n[0] for n in sorted(
         node_sizes.items(), key=lambda x:x[1], reverse=True)[0:k]]
@@ -36,7 +42,33 @@ def _get_pairwise_distance_between_largest_nodes(G, pos, node_sizes, k=20):
 
 
 def get_auto_scale(G, pos, node_sizes, k=20):
-    """ Returns the ratio of the ideal vs current top node distance """
+    """ Returns the ratio of the ideal vs current top node distance.
+
+    The scale is being set with a heuristic that we consider k largest nodes to prevent overlap,
+    take the distances of all these nodes, find the current minimum top node distance. We also 
+    find the ideal minimum top node distance that will prevent overlap and return their ratio to scale
+    the layout by that scale.
+    
+    Parameters
+    ----------
+
+    G : nx.Graph
+
+        A networkx Graph
+    
+    pos : dict
+
+        A dictionary containing the node positions
+    
+    node_sizes : dict
+
+        A dictionary containing the node sizes.
+    
+    k : int, default 20.
+
+        Number of nodes to consider when setting the scale automatically.
+    
+    """
     result = _get_pairwise_distance_between_largest_nodes(
         G, pos, node_sizes, k=20)
     current_minimum_top_node_distance = min(result.values())
@@ -47,6 +79,24 @@ def get_auto_scale(G, pos, node_sizes, k=20):
 
 
 def scale_layout(pos, scale):
-    """ Scales layout """
+    """ Scales layout
+    
+    Parameters
+    ----------
+    
+    pos: dict
+        A dictionary containing the positions of the nodes.
+        
+    scale :  int or float.
+        
+        Number to scale the positions by. 
+        
+    Returns
+    -------
+    dict
+
+        Returns Dictionary containing Positions for the nodes scaled by the scale.
+    
+    """
 
     return {k: (v[0]*scale, v[1]*scale) for k, v in pos.items()}

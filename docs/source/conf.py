@@ -40,10 +40,11 @@ release = '0.1'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.imgmath',
     'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon'
+    'sphinx.ext.githubpages',
+    'sphinx.ext.napoleon',
 ]
-#napoleon_use_ivar = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
