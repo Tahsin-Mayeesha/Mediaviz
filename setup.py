@@ -30,7 +30,7 @@ setuptools.setup(name='mediaviz',
 
     install_requires=[ "fa2l",
         "networkx<2.0.0",
-        "numpy", "matplotlib",'python-louvain'
+        "numpy", "matplotlib",'python-louvain',"adjustText"
     ],
 
     setup_requires=[

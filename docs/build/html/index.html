@@ -79,7 +79,17 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Welcome to Mediaviz’s documentation!</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#mediaviz-package">mediaviz package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-mediaviz.community_utils">mediaviz.community_utils module</a></li>
+<li><a class="reference internal" href="#module-mediaviz.draw">mediaviz.draw module</a></li>
+<li><a class="reference internal" href="#module-mediaviz.rotation">mediaviz.rotation module</a></li>
+<li><a class="reference internal" href="#module-mediaviz.scaling">mediaviz.scaling module</a></li>
+<li><a class="reference internal" href="#module-mediaviz.utils">mediaviz.utils module</a></li>
+<li><a class="reference internal" href="#module-mediaviz.viz_parser">mediaviz.viz_parser module</a></li>
+<li><a class="reference internal" href="#module-mediaviz">Module contents</a></li>
+</ul>
+</li>
 </ul>
 </div>
             
@@ -149,13 +159,598 @@
 <div class="toctree-wrapper compound">
 </div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<div class="section" id="mediaviz-package">
+<h1>mediaviz package<a class="headerlink" href="#mediaviz-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mediaviz.community_utils">
+<span id="mediaviz-community-utils-module"></span><h2>mediaviz.community_utils module<a class="headerlink" href="#module-mediaviz.community_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mediaviz.community_utils.get_community_colormap">
+<code class="descclassname">mediaviz.community_utils.</code><code class="descname">get_community_colormap</code><span class="sig-paren">(</span><em>partition</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/community_utils.html#get_community_colormap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.community_utils.get_community_colormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes dict of partitions after community detection and returns dict with colormap for partitions.</p>
+<p>The function is currently used with python-louvain package, but it’s a general purpose function
+for randomly generating colorlaps from node attributes.Expected to change into
+get_random_colormap(node_attributes) in the next version.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>partition</strong> (<em>dict</em>) – Dictionary of form {node1:partition,node2:partition….} generated after community detection.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">community</span> <span class="c1">#python-louvain package</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mediaviz.community_utils</span> <span class="k">import</span> <span class="n">get_community_colormap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">florentine_families_graph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">partitions</span> <span class="o">=</span> <span class="n">community</span><span class="o">.</span><span class="n">best_partition</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_community_colormap</span><span class="p">(</span><span class="n">partitions</span><span class="p">)</span>
+<span class="go">{0: &#39;#A0FD29&#39;, 1: &#39;#C3E994&#39;, 2: &#39;#61EDD2&#39;, 3: &#39;#DCB0DF&#39;}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary containing partitions and colormaps.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.community_utils.get_community_graph">
+<code class="descclassname">mediaviz.community_utils.</code><code class="descname">get_community_graph</code><span class="sig-paren">(</span><em>G</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/community_utils.html#get_community_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.community_utils.get_community_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a Graph, generates partitions from python-louvain package, sets the partitions as node
+attributes and returns the Graph and partitions.</p>
+<p>Helper function to integrate community detection with the draw function. In the draw function color_by
+parameter takes a node attribute along with a colormap for the attributes. So here python-louvain is used
+for getting the community partitions first and then we set those partitions as node attributes.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">florentine_families_graph</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mediaviz.community_utils</span> <span class="k">import</span> <span class="n">get_community_graph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="p">,</span> <span class="n">partitions</span> <span class="o">=</span> <span class="n">get_community_graph</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>G</strong> (<em>nx.Graph</em>) – A networkx graph.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>If G is a digraph , as python-louvain package does not currently support digraphs, it’s changed to the
+undirected graph of the largest weakly connected component.See source if necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Returns a tuple of form (G, partitions) where G has partitions set as node attributes and
+partitions are partitions generated from the python-louvain package.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mediaviz.draw">
+<span id="mediaviz-draw-module"></span><h2>mediaviz.draw module<a class="headerlink" href="#module-mediaviz.draw" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mediaviz.draw.draw_forceatlas2_network">
+<code class="descclassname">mediaviz.draw.</code><code class="descname">draw_forceatlas2_network</code><span class="sig-paren">(</span><em>G</em>, <em>pos=None</em>, <em>fa2l_iterations=50</em>, <em>fa2l_scaling_ratio=38</em>, <em>scale='auto'</em>, <em>num_labels=None</em>, <em>node_list=None</em>, <em>node_color='red'</em>, <em>color_by=None</em>, <em>colormap=None</em>, <em>node_size=10</em>, <em>size_field=None</em>, <em>min_size=0.1</em>, <em>max_size=100</em>, <em>with_labels=False</em>, <em>label_field=None</em>, <em>filter_by=None</em>, <em>top=None</em>, <em>adjust_labels=True</em>, <em>node_opacity=1</em>, <em>edge_opacity=0.05</em>, <em>font_size=8</em>, <em>font_color='k'</em>, <em>font_family='sans-serif'</em>, <em>filename='untitled.png'</em>, <em>title=None</em>, <em>edge_color='lightgray'</em>, <em>edge_color_by_source=False</em>, <em>figsize=(10</em>, <em>10)</em>, <em>fig_dpi=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/draw.html#draw_forceatlas2_network"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.draw.draw_forceatlas2_network" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function for drawing graph.</p>
+<p>The function has sensible defaults. If no scale is provided scale for the graph is set automatically.
+If no pos is given then force atlas 2 layout is used. Other parameters can be described below can be
+used to customize different aspects of the visualization.</p>
+<p>See Notes section for dependencies.</p>
+<p>Check README for examples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>nx.Graph</em>) – A networkx graph.</li>
+<li><strong>pos</strong> (<em>dict</em><em> or </em><em>None. optional. default None.</em>) – <p>pos containing positions for the graph generated by some network layout algorithm.</p>
+<p>If None, force_atlas2_layout function from fa2l package is used with default parameters to generate
+the layout for the graph. To use with user given parameters for the force_atlas2_layout, calculate
+pos outside draw function and then pass to the draw function.</p>
+<p>Pos can also be calculated with  any other network layout algorithms like nx.spring_layout(G)
+and passed to the draw function.</p>
+</li>
+<li><strong>fa2l_iterations</strong> (<em>int</em><em>, </em><em>optional. Default 50..</em>) – number of times to run the default force atlas 2 layout algorithm from fa2l package.</li>
+<li><strong>fa2l_scaling_ratio</strong> (<em>float</em><em>, </em><em>optional. Default 38.</em>) – How much repulsion you want. More makes a more sparse graph.</li>
+<li><strong>scale</strong> (<em>&quot;auto&quot;</em><em> or </em><em>float</em><em> or </em><em>int. optional. default &quot;auto&quot;.</em>) – <p>Used for scaling the graph automatically.Also used for expanding and contracting the graph.</p>
+<p>If “auto”, then scale is set automatically. see : mediaviz.scaling.get_auto_scale(…) for how
+scale is set. If given a float or int, positions are scaled according to the number.</p>
+<p>For example, scale = 2 will expand the graph to twice of its current size while scale = 0.5 will
+contract the graph to half of its original size.</p>
+<p>When scaling graph node sizes are not changed, only the relative positions are changed.</p>
+<p>For example, after doubling a position (2,4) will become (4,8).</p>
+</li>
+<li><strong>num_labels</strong> (<em>int</em><em>, </em><em>optional. default None.</em>) – <p>Number of nodes to label sorted by the node size.</p>
+<p>Recommended to use only with varying node sizes.</p>
+<p>If all node sizes are equal it will just return the nodes from G.nodes() in the same order.</p>
+</li>
+<li><strong>node_list</strong> (<em>list. optional</em><em>, </em><em>default None.</em>) – list of nodes to draw. if None and there’s no filtering done all nodes are drawn.</li>
+<li><strong>node_color</strong> (<em>str</em><em> or </em><em>list. default 'red'.</em>) – <p>Multiple variations are allowed.</p>
+<p>node_color can be color name like “r”,”b” or hex code in string format.</p>
+<p>node_color can also be a list of colors like [“r”,”b”…] or [“#FFFFFF”,”#…”…].</p>
+<p>If node_colors are being passed then color_by and colormap should be None(their defaults)</p>
+</li>
+<li><strong>color_by</strong> (<em>node attribute. optional. Default None.</em>) – <p>categorical node attribute to color the nodes by.</p>
+<p>If color by is given, a colormap dictionary must also be provided.</p>
+<p>Example : if “gender” in graph node attribute, then color_by = “gender” and
+colormap = {“M”:’b’,”F”:’r’}</p>
+</li>
+<li><strong>colormap</strong> (<em>dict</em><em>, </em><em>optional. Default None.</em>) – <p>dictionaries containing color assignment for each value of the categorical node attribute in color_by.</p>
+<p>Assumes color_by is a categorical node_attribute like “gender” or “partition” or “country”.</p>
+<p>colormap is then a dictionary that assigns color for each unique value of that categorical node
+attribute.</p>
+<p>Example : If there’s two unique values “M” and “F” in “gender” node attribute, then
+color_by = “gender” and colormap = {“M”:’b’,”F”:’r’}.</p>
+</li>
+<li><strong>node_size</strong> (<em>int</em><em> or </em><em>float</em><em> or </em><em>list. Default 10.</em>) – <p>Multiple values are supported.</p>
+<p>int or float value can be provided to make all node sizes same.</p>
+<p>list of node sizes can also be passed.</p>
+<p>if node_size is given, size_field should not be used. Default of size_field is None.</p>
+</li>
+<li><strong>size_field</strong> (<em>str</em><em>, </em><em>optional. Default None.</em>) – <p>Node attribute to resize the nodes by. Must be numeric node attribute.</p>
+<p>If given node sizes are resized to [min_size, max_size] using set_node_size from utils module.</p>
+</li>
+<li><strong>min_size</strong> (<em>float</em><em>, </em><em>optional. Default 0.1</em>) – Minimum size for the nodes.</li>
+<li><strong>max_size</strong> (<em>float</em><em> , </em><em>optional. Default : 100.</em>) – maximum size for the nodes</li>
+<li><strong>with_labels</strong> (<em>bool</em><em>, </em><em>optional. Default False.</em>) – Whether to show the labels or not. If label_field is not provided node names are used.</li>
+<li><strong>filter_by</strong> (<em>str</em><em>, </em><em>optional. Default None.</em>) – <p>Numeric Node attribute to filter the graph by. If filter_by is given, top must be provided.</p>
+<p>Filter_by filters the graph to draw only the top k nodes.</p>
+<p>For example, if filter_by = “inlink_count” and top = 100, the graph is filtered to
+the subgraph containing the top 100 nodes sorted by inlink count and only the subgraph
+is drawn.</p>
+</li>
+<li><strong>top</strong> (<em>int</em><em>, </em><em>optional. Default None.</em>) – Number of largest nodes to keep after filtering using filter_by.</li>
+<li><strong>label_field</strong> (<em>str</em><em>, </em><em>optional. Default None.</em>) – Node attribute to label the nodes by.</li>
+<li><strong>adjust_labels</strong> (<em>bool</em><em>, </em><em>optional. Default True.</em>) – <p>If True, Adjust Text package is used for adjusting the labels to prevent label overlap.</p>
+<p>Label texts are iteratively adjusted until there’s no overlap.</p>
+<p>See : <a class="reference external" href="https://github.com/Phlya/adjustText">https://github.com/Phlya/adjustText</a> for details.</p>
+</li>
+<li><strong>node_opacity</strong> (<em>float. Default 1</em>) – Node alpha.</li>
+<li><strong>edge_opacity</strong> (<em>float.Default 0.05.</em>) – Edge alpha.</li>
+<li><strong>font_size</strong> (<em>int</em><em>, </em><em>optional. Default 8.</em>) – Label font size.</li>
+<li><strong>font_color</strong> (<em>str</em><em>, </em><em>optional. Default 'k'</em>) – Label font color.</li>
+<li><strong>font_family</strong> (<em>str. optional. Default 'sans-serif'</em>) – Label font family.</li>
+<li><strong>filename</strong> (<em>str</em><em>, </em><em>optional. Default &quot;untitled.png&quot;</em>) – File name to save the figure by.
+See fname from <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.savefig.html">https://matplotlib.org/api/_as_gen/matplotlib.pyplot.savefig.html</a></li>
+<li><strong>title</strong> (<em>str</em><em>, </em><em>optional. Default None.</em>) – Plt title.</li>
+<li><strong>edge_color_by_source</strong> (<em>bool</em><em>, </em><em>optional. Default False.</em>) – If true, edge colors are same as the source node for the edge. If edge_color is given, then
+edge_color_by_source should be set to default False.</li>
+<li><strong>figsize</strong> (<em>tuple</em><em>, </em><em>optional. Default :</em><em> (</em><em>10</em><em>,</em><em>10</em><em>)</em>) – figure size.</li>
+<li><strong>fig_dpi</strong> (<em>float</em><em>, </em><em>optional. Default : 100.</em>) – See <a class="reference external" href="https://matplotlib.org/api/figure_api.html">https://matplotlib.org/api/figure_api.html</a> for details.</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mediaviz.rotation">
+<span id="mediaviz-rotation-module"></span><h2>mediaviz.rotation module<a class="headerlink" href="#module-mediaviz.rotation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mediaviz.rotation.rotation_layout">
+<code class="descclassname">mediaviz.rotation.</code><code class="descname">rotation_layout</code><span class="sig-paren">(</span><em>pos</em>, <em>angle</em>, <em>origin=(0</em>, <em>0)</em>, <em>unit='degree'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/rotation.html#rotation_layout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.rotation.rotation_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotates the pos to the given angle with respect to origin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pos</strong> (<em>dict</em>) – A dictionary with nodes as keys and positions as values.</li>
+<li><strong>angle</strong> (<em>float</em>) – angle in degree or radian</li>
+<li><strong>origin</strong> (<em>tuple</em>) – the point will rotate with respect to the origin.</li>
+<li><strong>unit</strong> (<em>str</em>) – ‘degree’/’radian’ to indicate if the angle is in degrees or radians.If given in degrees
+angle is converted to radians.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns the pos dict with positions rotated by the given angle with respect to the given origin.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mediaviz.scaling">
+<span id="mediaviz-scaling-module"></span><h2>mediaviz.scaling module<a class="headerlink" href="#module-mediaviz.scaling" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mediaviz.scaling.get_auto_scale">
+<code class="descclassname">mediaviz.scaling.</code><code class="descname">get_auto_scale</code><span class="sig-paren">(</span><em>G</em>, <em>pos</em>, <em>node_sizes</em>, <em>k=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/scaling.html#get_auto_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.scaling.get_auto_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ratio of the ideal vs current top node distance.</p>
+<p>The scale is being set with a heuristic that we consider k largest nodes to prevent overlap,
+take the distances of all these nodes, find the current minimum top node distance. We also
+find the ideal minimum top node distance that will prevent overlap and return their ratio to scale
+the layout by that scale.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>nx.Graph</em>) – A networkx Graph</li>
+<li><strong>pos</strong> (<em>dict</em>) – A dictionary containing the node positions</li>
+<li><strong>node_sizes</strong> (<em>dict</em>) – A dictionary containing the node sizes.</li>
+<li><strong>k</strong> (<em>int</em><em>, </em><em>default 20.</em>) – Number of nodes to consider when setting the scale automatically.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.scaling.scale_layout">
+<code class="descclassname">mediaviz.scaling.</code><code class="descname">scale_layout</code><span class="sig-paren">(</span><em>pos</em>, <em>scale</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/scaling.html#scale_layout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.scaling.scale_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales layout</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pos</strong> (<em>dict</em>) – A dictionary containing the positions of the nodes.</li>
+<li><strong>scale</strong> (<em>int</em><em> or </em><em>float.</em>) – Number to scale the positions by.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Returns Dictionary containing Positions for the nodes scaled by the scale.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mediaviz.utils">
+<span id="mediaviz-utils-module"></span><h2>mediaviz.utils module<a class="headerlink" href="#module-mediaviz.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mediaviz.utils.draw_networkx_nodes_custom">
+<code class="descclassname">mediaviz.utils.</code><code class="descname">draw_networkx_nodes_custom</code><span class="sig-paren">(</span><em>G</em>, <em>pos</em>, <em>node_size</em>, <em>node_color='r'</em>, <em>alpha=1</em>, <em>ax=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/utils.html#draw_networkx_nodes_custom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.utils.draw_networkx_nodes_custom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws networkx graph nodes with circles instead of using plt.scatter function like draw_networkx_nodes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>nx.Graph</em>) – A networkx graph object.</li>
+<li><strong>pos</strong> (<em>dict</em>) – A dictionary with nodes as keys and positions as values.</li>
+<li><strong>node_size</strong> (<em>list</em>) – A list containing node sizes for each node.</li>
+<li><strong>node_color</strong> (<em>str</em><em> or </em><em>list</em>) – A single color or list containing color values. Behavior same as draw_networkx_nodes</li>
+<li><strong>alpha</strong> (<em>float</em>) – opacity (between 0-1) for setting transparency of the nodes</li>
+<li><strong>ax</strong> (<em>axis</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.utils.edgecolor_by_source">
+<code class="descclassname">mediaviz.utils.</code><code class="descname">edgecolor_by_source</code><span class="sig-paren">(</span><em>G</em>, <em>node_colors</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/utils.html#edgecolor_by_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.utils.edgecolor_by_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of colors to set as edge colors based on the source node for each edge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>graph.</em>) – A networkx graph.</li>
+<li><strong>node_colors</strong> (<em>list</em>) – List of node colors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">colormap</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;male&#39;</span><span class="p">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;female&#39;</span><span class="p">:</span><span class="s1">&#39;r&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node_colors</span> <span class="o">=</span> <span class="n">set_node_color</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span><span class="n">colormap</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">edge_colors</span> <span class="o">=</span> <span class="n">edgecolor_by_source</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">node_colors</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of colors for each edge of the graph color set by the source node.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.utils.filter_graph">
+<code class="descclassname">mediaviz.utils.</code><code class="descname">filter_graph</code><span class="sig-paren">(</span><em>G</em>, <em>filter_by=None</em>, <em>top=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/utils.html#filter_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.utils.filter_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters the graph by returning the subgraph for the top x nodes for the given filter_by field.</p>
+<p>To learn about subgraphs see : <a class="reference external" href="https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.Graph.subgraph.html">https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.Graph.subgraph.html</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>graph.</em>) – A networkx graph.</li>
+<li><strong>filter_by</strong> (<em>graph node attribute</em>) – Numerical node attribute to filter the graph.</li>
+<li><strong>top</strong> (<em>int</em>) – Number of top nodes to return.
+E.g if the node attribute is node_size then the function returns top = 100 largest node subgraph.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">filter_field</span> <span class="o">=</span> <span class="s2">&quot;inlink_count&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filter_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">filter_by</span><span class="o">=</span><span class="n">filter_field</span><span class="p">,</span><span class="n">top</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Subgraph after filtering by the node attribute.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">nx.Graph</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.utils.get_subgraph_pos">
+<code class="descclassname">mediaviz.utils.</code><code class="descname">get_subgraph_pos</code><span class="sig-paren">(</span><em>G</em>, <em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/utils.html#get_subgraph_pos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.utils.get_subgraph_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the filtered positions for subgraph G. If subgraph = original graph then pos will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>nx.Graph</em>) – A graph object.</li>
+<li><strong>Pos</strong> (<em>dict</em>) – A dictionary with nodes as keys and positions as values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pos</span>  <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subgraph_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;2&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subgraph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">subgraph_nodes</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subgraph_positions</span> <span class="o">=</span> <span class="n">get_subgraph_pos</span><span class="p">(</span><span class="n">subgraph</span><span class="p">,</span><span class="n">pos</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Assuming positions were generated earlier for a larger graph with some layout algorithm
+this functions returns the filtered positions by the subgraph.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.utils.set_node_color">
+<code class="descclassname">mediaviz.utils.</code><code class="descname">set_node_color</code><span class="sig-paren">(</span><em>G</em>, <em>color_by</em>, <em>colormap=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/utils.html#set_node_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.utils.set_node_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of colors for each node based on the provided colormap.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>G</strong> (<em>graph.</em>) – A networkx graph.</li>
+<li><strong>color_by</strong> (<em>str</em>) – Graph node attribute with finite discrete categorical values.
+See : <a class="reference external" href="https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges">https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges</a> for learning about node attributes</li>
+<li><strong>colormap</strong> – Dict mapping values of color_by attribute to different colors. colors can be a single color like ‘r’ or
+hex code of form ‘#FFFFFF’</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list containing the colors for each node.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">colormap</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;male&#39;</span><span class="p">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;female&#39;</span><span class="p">:</span><span class="s1">&#39;r&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node_colors</span> <span class="o">=</span> <span class="n">set_node_color</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span><span class="n">colormap</span><span class="p">)</span>
+<span class="go">[&#39;b&#39;,&#39;b&#39;,&#39;r&#39;,&#39;b&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.utils.set_node_label">
+<code class="descclassname">mediaviz.utils.</code><code class="descname">set_node_label</code><span class="sig-paren">(</span><em>G</em>, <em>label_field</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/utils.html#set_node_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.utils.set_node_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dict mapping nodes to the labels.</p>
+<p>Helper function for use in visualization functions like nx.draw_networkx_labels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>graph.</em>) – A networkx graph.</li>
+<li><strong>label_field</strong> (<em>node attribute</em>) – Node attribute to be set as a the label for the node.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">label_field</span> <span class="o">=</span> <span class="s2">&quot;label&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">set_node_label</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">label_field</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of node labels</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.utils.set_node_size">
+<code class="descclassname">mediaviz.utils.</code><code class="descname">set_node_size</code><span class="sig-paren">(</span><em>G</em>, <em>size_field</em>, <em>min_size</em>, <em>max_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/utils.html#set_node_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.utils.set_node_size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Returns a list containing values of the size_field attribute from Graph range</dt>
+<dd>normalized between [min_size,max_size] interval.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>G</strong> (<em>graph.</em>) – A networkx graph.</li>
+<li><strong>size_field</strong> (<em>graph attribute</em>) – graph node attribute containing numbers(integers or floats).
+See : <a class="reference external" href="https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges">https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges</a> for learning about graph attributes</li>
+<li><strong>min_size</strong> (<em>float</em>) – minimum value for the new range</li>
+<li><strong>max_size</strong> (<em>float</em>) – maximum value for the new range.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Mapping/scaling a number to a certain range like [0,1] or [-1,1]</p>
+<dl class="docutils">
+<dt>y = (x - min(d))*(max(n)-min(n))</dt>
+<dd><dl class="first last docutils">
+<dt>_____________________________  + min(n)</dt>
+<dd>(max(d)-min(d))</dd>
+</dl>
+</dd>
+</dl>
+<p>min(d) = minimum value in the data</p>
+<p>max(d) = maximum value in the data</p>
+<p>min(n) = minimum value in the new range</p>
+<p>max(n) = maximum value in the new range
+input number : x , output : y</p>
+<p class="rubric">Example</p>
+<p>&gt;&gt;&gt;size_field = ‘inlink_count’
+&gt;&gt;&gt;node_sizes = set_node_size(G,size_field= “inlink_count”,min_size = 0.1, max_size=800)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of node sizes normalized to the range.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mediaviz.viz_parser">
+<span id="mediaviz-viz-parser-module"></span><h2>mediaviz.viz_parser module<a class="headerlink" href="#module-mediaviz.viz_parser" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mediaviz.viz_parser.parse_colors">
+<code class="descclassname">mediaviz.viz_parser.</code><code class="descname">parse_colors</code><span class="sig-paren">(</span><em>path</em>, <em>hex=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/viz_parser.html#parse_colors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.viz_parser.parse_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the color attribute from .gexf file viz tag and returns the dict with the node colors.</p>
+<p>Default nx.read_gexf() does not read the attributes from the visualization namespace
+of .gexf files so this function is used to read the color codes.</p>
+<p>To learn more see : <a class="reference external" href="https://gephi.org/gexf/format/viz.html">https://gephi.org/gexf/format/viz.html</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) – File or filename of the graph in .gexf format.</li>
+<li><strong>hex</strong> (<em>bool</em>) – whether to return the color codes in hex format. if False rgb color codes are returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>Returns dict containing the color codes.</p>
+<p>Example : {‘1’:’#FFFFFF’} or {‘1’:{‘r’:0,’g’:0,’b’:0}}</p>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.viz_parser.parse_position">
+<code class="descclassname">mediaviz.viz_parser.</code><code class="descname">parse_position</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/viz_parser.html#parse_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.viz_parser.parse_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the position attribute from .gexf file viz tag and returns the dict with the node sizes.</p>
+<p>Default nx.read_gexf() does not read attributes from the visualization namespace
+of .gexf files so we use this function to get the node positions, possibly after using layout
+algorithms in Gephi.</p>
+<p>To learn more see : <a class="reference external" href="https://gephi.org/gexf/format/viz.html">https://gephi.org/gexf/format/viz.html</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – File or filename of the graph in .gexf format.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns dict containing the node positions. Example : {‘1’:(2.0,3.0)}</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mediaviz.viz_parser.parse_size">
+<code class="descclassname">mediaviz.viz_parser.</code><code class="descname">parse_size</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mediaviz/viz_parser.html#parse_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mediaviz.viz_parser.parse_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the size attribute from .gexf file viz tag and returns the dict with the node sizes.</p>
+<p>Default nx.read_gexf() does not read attributes from the visualization namespace
+of .gexf files so we use this function to get the node sizes.</p>
+<p>To learn more see : <a class="reference external" href="https://gephi.org/gexf/format/viz.html">https://gephi.org/gexf/format/viz.html</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – File or filename of the graph in .gexf format.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns dict containing the node sizes. Example : {‘1’:52.0}</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mediaviz">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mediaviz" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 

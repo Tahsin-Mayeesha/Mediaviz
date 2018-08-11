@@ -140,7 +140,7 @@
             
   <h1>Source code for mediaviz.utils</h1><div class="highlight"><pre>
 <span></span>
-<div class="viewcode-block" id="set_node_color"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.set_node_color">[docs]</a><span class="k">def</span> <span class="nf">set_node_color</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">color_by</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="set_node_color"><a class="viewcode-back" href="../../index.html#mediaviz.utils.set_node_color">[docs]</a><span class="k">def</span> <span class="nf">set_node_color</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">color_by</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Returns a list of colors for each node based on the provided colormap. </span>
 
 <span class="sd">    Parameters </span>
@@ -173,7 +173,7 @@
     <span class="k">return</span> <span class="n">node_colors</span></div>
 
 
-<div class="viewcode-block" id="set_node_size"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.set_node_size">[docs]</a><span class="k">def</span> <span class="nf">set_node_size</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">size_field</span><span class="p">,</span> <span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="p">):</span>
+<div class="viewcode-block" id="set_node_size"><a class="viewcode-back" href="../../index.html#mediaviz.utils.set_node_size">[docs]</a><span class="k">def</span> <span class="nf">set_node_size</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">size_field</span><span class="p">,</span> <span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Returns a list containing values of the size_field attribute from Graph range </span>
 <span class="sd">        normalized between [min_size,max_size] interval.</span>
 
@@ -233,7 +233,7 @@
     <span class="k">return</span> <span class="p">(((</span><span class="n">vals</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">max_size</span><span class="o">-</span><span class="n">min_size</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">max_val</span><span class="o">-</span><span class="n">min_val</span><span class="p">))</span> <span class="o">+</span> <span class="n">min_size</span></div>
 
 
-<div class="viewcode-block" id="filter_graph"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.filter_graph">[docs]</a><span class="k">def</span> <span class="nf">filter_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">filter_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="filter_graph"><a class="viewcode-back" href="../../index.html#mediaviz.utils.filter_graph">[docs]</a><span class="k">def</span> <span class="nf">filter_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">filter_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Filters the graph by returning the subgraph for the top x nodes for the given filter_by field.</span>
 <span class="sd">    </span>
 <span class="sd">    To learn about subgraphs see : https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.Graph.subgraph.html</span>
@@ -273,7 +273,7 @@
             <span class="s2">&quot;Subgraph can&#39;t contain more nodes than original graph&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="set_node_label"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.set_node_label">[docs]</a><span class="k">def</span> <span class="nf">set_node_label</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">label_field</span><span class="p">):</span>
+<div class="viewcode-block" id="set_node_label"><a class="viewcode-back" href="../../index.html#mediaviz.utils.set_node_label">[docs]</a><span class="k">def</span> <span class="nf">set_node_label</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">label_field</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Returns a dict mapping nodes to the labels. </span>
 <span class="sd">    </span>
 <span class="sd">    Helper function for use in visualization functions like nx.draw_networkx_labels.</span>
@@ -303,7 +303,7 @@
     <span class="k">return</span> <span class="n">node_labels</span></div>
 
 
-<div class="viewcode-block" id="edgecolor_by_source"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.edgecolor_by_source">[docs]</a><span class="k">def</span> <span class="nf">edgecolor_by_source</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node_colors</span><span class="p">):</span>
+<div class="viewcode-block" id="edgecolor_by_source"><a class="viewcode-back" href="../../index.html#mediaviz.utils.edgecolor_by_source">[docs]</a><span class="k">def</span> <span class="nf">edgecolor_by_source</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node_colors</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Returns a list of colors to set as edge colors based on the source node for each edge.</span>
 
 <span class="sd">    Parameters </span>
@@ -336,7 +336,7 @@
     <span class="k">return</span> <span class="n">edge_colormap</span></div>
 
 
-<div class="viewcode-block" id="get_subgraph_pos"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.get_subgraph_pos">[docs]</a><span class="k">def</span> <span class="nf">get_subgraph_pos</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<div class="viewcode-block" id="get_subgraph_pos"><a class="viewcode-back" href="../../index.html#mediaviz.utils.get_subgraph_pos">[docs]</a><span class="k">def</span> <span class="nf">get_subgraph_pos</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Returns the filtered positions for subgraph G. If subgraph = original graph then pos will be returned.</span>
 
 <span class="sd">    Parameters </span>
@@ -365,7 +365,7 @@
     <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()}</span></div>
 
 
-<div class="viewcode-block" id="draw_networkx_nodes_custom"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.draw_networkx_nodes_custom">[docs]</a><span class="k">def</span> <span class="nf">draw_networkx_nodes_custom</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_size</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="draw_networkx_nodes_custom"><a class="viewcode-back" href="../../index.html#mediaviz.utils.draw_networkx_nodes_custom">[docs]</a><span class="k">def</span> <span class="nf">draw_networkx_nodes_custom</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_size</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Draws networkx graph nodes with circles instead of using plt.scatter function like draw_networkx_nodes</span>
 
 <span class="sd">    Parameters</span>

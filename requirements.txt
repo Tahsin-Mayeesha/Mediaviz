@@ -1,0 +1,9 @@
+numpy
+
+matplotlib
+
+fa2l
+networkx<2.0.0
+python-louvain
+adjustText
+
