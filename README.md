@@ -1,12 +1,12 @@
-
-
-
+![](readmegif.gif)
 
 # Mediaviz
 
 This repository is for my project [Automating Network Visualization and community detection of Media Sources Network from Mediacloud data.](https://summerofcode.withgoogle.com/projects/#6265196406898688)  with Google Summer Of Code 2018. The goal is to create network visualizations with force atlas 2 layout and appropriate visual aesthetics on top of python's popular network analysis library networkx. 
 
-See blog posts related to the project in the following links.
+
+
+# Blog Posts
 
 - [GSOC 2018 Experience : Visualizing Media Data With Network Analysis (PART 1 )](https://medium.com/learning-machine-learning/gsoc-2018-experience-visualizing-media-data-with-network-analysis-part-1-c4ba4b76b1aa)
 - [GSOC 2018 : Network Visualization Of MediaCloud Topic Network + 1st evaluation (Part 2)](https://medium.com/learning-machine-learning/gsoc-2018-network-visualization-of-mediacloud-topic-network-1st-evaluation-part-2-ca72e25a88d5)
@@ -153,15 +153,19 @@ draw_forceatlas2_network(G,
 
 # Documentation
 
-### Core Drawing Function
+Complete Documentation is available at https://mediaviz.readthedocs.io/en/latest/ 
 
-Draw_forceatlas2_network
+# Contribution
 
+If you want to contribute please send a pull request with listing the changes you have made and the reasoning clearly stated.
 
+# Author
 
-### Utilities 
+Tahsin Mayeesha
 
+# Google Summer Of Code Mentor
 
+Hal Roberts 
 
 
 
