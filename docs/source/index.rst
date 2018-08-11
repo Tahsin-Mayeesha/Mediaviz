@@ -12,7 +12,7 @@ Welcome to Mediaviz's documentation!
 
 
 
-Indices and tables
+Module Documentation
 ==================
 
 * :ref:`genindex`

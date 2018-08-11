@@ -151,68 +151,253 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">draw_networkx_nodes_custom</span>
 <span class="kn">from</span> <span class="nn">.scaling</span> <span class="k">import</span> <span class="n">get_auto_scale</span><span class="p">,</span> <span class="n">scale_layout</span>
 
-<div class="viewcode-block" id="draw_forceatlas2_network"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.draw.draw_forceatlas2_network">[docs]</a><span class="k">def</span> <span class="nf">draw_forceatlas2_network</span><span class="p">(</span>
-        <span class="n">G</span><span class="p">,</span>
-        <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fa2l_iterations</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">fa2l_scaling_ratio</span> <span class="o">=</span> <span class="mi">38</span><span class="p">,</span>
-        <span class="n">scale</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-        <span class="n">num_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">color_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-        <span class="n">node_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="n">size_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">filter_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">adjust_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">node_opacity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edge_opacity</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-        <span class="n">font_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">font_family</span><span class="o">=</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;untitled.png&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">edge_color</span><span class="o">=</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span>
-        <span class="n">edge_color_by_source</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">fig_dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    
+
+<div class="viewcode-block" id="draw_forceatlas2_network"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.draw.draw_forceatlas2_network">[docs]</a><span class="k">def</span> <span class="nf">draw_forceatlas2_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span>
+                             <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">fa2l_iterations</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">fa2l_scaling_ratio</span><span class="o">=</span><span class="mi">38</span><span class="p">,</span>
+                             <span class="n">scale</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+                             <span class="n">num_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">node_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">color_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">node_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                             <span class="n">size_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                             <span class="n">with_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">label_field</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">filter_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">adjust_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">node_opacity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edge_opacity</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+                             <span class="n">font_size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">font_family</span><span class="o">=</span><span class="s1">&#39;sans-serif&#39;</span><span class="p">,</span>
+                             <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;untitled.png&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">edge_color</span><span class="o">=</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span>
+                             <span class="n">edge_color_by_source</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                             <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">fig_dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Main function for drawing graph.</span>
+
+<span class="sd">    The function has sensible defaults. If no scale is provided scale for the graph is set automatically. </span>
+<span class="sd">    If no pos is given then force atlas 2 layout is used. Other parameters can be described below can be </span>
+<span class="sd">    used to customize different aspects of the visualization. </span>
+
+<span class="sd">    See Notes section for dependencies. </span>
+
+<span class="sd">    Check README for examples.</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    G : nx.Graph</span>
+
+<span class="sd">        A networkx graph.</span>
+
+<span class="sd">    pos : dict or None. optional. default None.</span>
+
+<span class="sd">        pos containing positions for the graph generated by some network layout algorithm. </span>
+
+<span class="sd">        If None, force_atlas2_layout function from fa2l package is used with default parameters to generate </span>
+<span class="sd">        the layout for the graph. To use with user given parameters for the force_atlas2_layout, calculate</span>
+<span class="sd">        pos outside draw function and then pass to the draw function.</span>
+
+<span class="sd">        Pos can also be calculated with  any other network layout algorithms like nx.spring_layout(G) </span>
+<span class="sd">        and passed to the draw function. </span>
+
+<span class="sd">    fa2l_iterations : int, optional. Default 50..</span>
+
+<span class="sd">        number of times to run the default force atlas 2 layout algorithm from fa2l package.</span>
+
+<span class="sd">    fa2l_scaling_ratio : float, optional. Default 38.</span>
+
+<span class="sd">        How much repulsion you want. More makes a more sparse graph.</span>
+
+<span class="sd">    scale : &quot;auto&quot; or float or int. optional. default &quot;auto&quot;.</span>
+
+<span class="sd">        Used for scaling the graph automatically.Also used for expanding and contracting the graph.</span>
+
+<span class="sd">        If &quot;auto&quot;, then scale is set automatically. see : mediaviz.scaling.get_auto_scale(...) for how</span>
+<span class="sd">        scale is set. If given a float or int, positions are scaled according to the number. </span>
+
+<span class="sd">        For example, scale = 2 will expand the graph to twice of its current size while scale = 0.5 will </span>
+<span class="sd">        contract the graph to half of its original size. </span>
+
+<span class="sd">        When scaling graph node sizes are not changed, only the relative positions are changed. </span>
+
+<span class="sd">        For example, after doubling a position (2,4) will become (4,8).</span>
+
+<span class="sd">    num_labels : int, optional. default None.</span>
+
+<span class="sd">        Number of nodes to label sorted by the node size. </span>
+
+<span class="sd">        Recommended to use only with varying node sizes.</span>
+
+<span class="sd">        If all node sizes are equal it will just return the nodes from G.nodes() in the same order.</span>
+
+<span class="sd">    node_list : list. optional, default None.</span>
+<span class="sd">        list of nodes to draw. if None and there&#39;s no filtering done all nodes are drawn.</span>
+
+<span class="sd">    node_color : str or list. default &#39;red&#39;.</span>
+
+<span class="sd">        Multiple variations are allowed. </span>
+
+<span class="sd">        node_color can be color name like &quot;r&quot;,&quot;b&quot; or hex code in string format.</span>
+
+<span class="sd">        node_color can also be a list of colors like [&quot;r&quot;,&quot;b&quot;...] or [&quot;#FFFFFF&quot;,&quot;#...&quot;...]. </span>
+
+<span class="sd">        If node_colors are being passed then color_by and colormap should be None(their defaults)</span>
+
+<span class="sd">    color_by : node attribute. optional. Default None.</span>
+
+<span class="sd">        categorical node attribute to color the nodes by. </span>
+
+<span class="sd">        If color by is given, a colormap dictionary must also be provided.</span>
+
+<span class="sd">        Example : if &quot;gender&quot; in graph node attribute, then color_by = &quot;gender&quot; and </span>
+<span class="sd">        colormap = {&quot;M&quot;:&#39;b&#39;,&quot;F&quot;:&#39;r&#39;}</span>
+
+<span class="sd">    colormap : dict, optional. Default None.</span>
+
+<span class="sd">        dictionaries containing color assignment for each value of the categorical node attribute in color_by.</span>
+
+<span class="sd">        Assumes color_by is a categorical node_attribute like &quot;gender&quot; or &quot;partition&quot; or &quot;country&quot;. </span>
+
+<span class="sd">        colormap is then a dictionary that assigns color for each unique value of that categorical node </span>
+<span class="sd">        attribute. </span>
+
+<span class="sd">        Example : If there&#39;s two unique values &quot;M&quot; and &quot;F&quot; in &quot;gender&quot; node attribute, then </span>
+<span class="sd">        color_by = &quot;gender&quot; and colormap = {&quot;M&quot;:&#39;b&#39;,&quot;F&quot;:&#39;r&#39;}.</span>
+
+<span class="sd">    node_size : int or float or list. Default 10.</span>
+
+<span class="sd">        Multiple values are supported.</span>
+<span class="sd">        </span>
+<span class="sd">        int or float value can be provided to make all node sizes same.</span>
+
+<span class="sd">        list of node sizes can also be passed.</span>
+
+<span class="sd">        if node_size is given, size_field should not be used. Default of size_field is None.</span>
+
+<span class="sd">    size_field : str, optional. Default None.</span>
+
+<span class="sd">        Node attribute to resize the nodes by. Must be numeric node attribute.</span>
+
+<span class="sd">        If given node sizes are resized to [min_size, max_size] using set_node_size from utils module.</span>
+
+<span class="sd">    min_size : float, optional. Default 0.1</span>
+
+<span class="sd">        Minimum size for the nodes.</span>
+
+<span class="sd">    max_size : float , optional. Default : 100.</span>
+
+<span class="sd">        maximum size for the nodes</span>
+
+<span class="sd">    with_labels: bool, optional. Default False.</span>
+
+<span class="sd">        Whether to show the labels or not. If label_field is not provided node names are used.</span>
+
+<span class="sd">    filter_by : str, optional. Default None.</span>
+<span class="sd">         </span>
+<span class="sd">         Numeric Node attribute to filter the graph by. If filter_by is given, top must be provided. </span>
+
+<span class="sd">        Filter_by filters the graph to draw only the top k nodes. </span>
+
+<span class="sd">        For example, if filter_by = &quot;inlink_count&quot; and top = 100, the graph is filtered to</span>
+<span class="sd">        the subgraph containing the top 100 nodes sorted by inlink count and only the subgraph </span>
+<span class="sd">        is drawn.</span>
+
+<span class="sd">    top : int, optional. Default None.</span>
+
+<span class="sd">        Number of largest nodes to keep after filtering using filter_by.</span>
+
+<span class="sd">    label_field : str, optional. Default None.</span>
+
+<span class="sd">        Node attribute to label the nodes by.</span>
+
+<span class="sd">    adjust_labels : bool, optional. Default True.</span>
+
+<span class="sd">        If True, Adjust Text package is used for adjusting the labels to prevent label overlap.</span>
+
+<span class="sd">        Label texts are iteratively adjusted until there&#39;s no overlap.</span>
+
+<span class="sd">        See : https://github.com/Phlya/adjustText for details. </span>
+
+<span class="sd">    node_opacity : float. Default 1</span>
+
+<span class="sd">        Node alpha.</span>
+<span class="sd">    </span>
+<span class="sd">    edge_opacity : float.Default 0.05.</span>
+
+<span class="sd">        Edge alpha.</span>
+
+<span class="sd">    font_size : int, optional. Default 8.</span>
+<span class="sd">        </span>
+<span class="sd">        Label font size.</span>
+
+<span class="sd">    font_color : str, optional. Default &#39;k&#39;</span>
+
+<span class="sd">        Label font color. </span>
+
+<span class="sd">    font_family : str. optional. Default &#39;sans-serif&#39;</span>
+
+<span class="sd">        Label font family.</span>
+
+<span class="sd">    filename : str, optional. Default &quot;untitled.png&quot;</span>
+
+<span class="sd">        File name to save the figure by. </span>
+<span class="sd">        See fname from https://matplotlib.org/api/_as_gen/matplotlib.pyplot.savefig.html</span>
+
+<span class="sd">    title : str, optional. Default None.</span>
+
+<span class="sd">        Plt title.</span>
+
+<span class="sd">    edge_color_by_source : bool, optional. Default False.</span>
+
+<span class="sd">        If true, edge colors are same as the source node for the edge. If edge_color is given, then </span>
+<span class="sd">        edge_color_by_source should be set to default False.</span>
+
+<span class="sd">    figsize : tuple, optional. Default : (10,10)</span>
+<span class="sd">        figure size.</span>
+
+<span class="sd">    fig_dpi : float, optional. Default : 100. </span>
+<span class="sd">        See https://matplotlib.org/api/figure_api.html for details.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">node_list</span><span class="p">:</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">node_list</span><span class="p">)</span>
-    
-    
+
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="o">==</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
-        <span class="n">G</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">weakly_connected_component_subgraphs</span><span class="p">(</span><span class="n">G</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">to_undirected</span><span class="p">()</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">weakly_connected_component_subgraphs</span><span class="p">(</span>
+            <span class="n">G</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">to_undirected</span><span class="p">()</span>
 
-    
-
-
-    <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>        
+    <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">force_atlas2_layout</span><span class="p">(</span>
-        <span class="n">G</span><span class="p">,</span>
-        <span class="n">iterations</span><span class="o">=</span><span class="n">fa2l_iterations</span><span class="p">,</span>
-        <span class="n">pos_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">node_masses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">outbound_attraction_distribution</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">lin_log_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">prevent_overlapping</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">edge_weight_influence</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-        <span class="n">jitter_tolerance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-        <span class="n">barnes_hut_optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">barnes_hut_theta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-        <span class="n">scaling_ratio</span><span class="o">=</span><span class="n">fa2l_scaling_ratio</span><span class="p">,</span>
-        <span class="n">strong_gravity_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">multithread</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">gravity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-        
+            <span class="n">G</span><span class="p">,</span>
+            <span class="n">iterations</span><span class="o">=</span><span class="n">fa2l_iterations</span><span class="p">,</span>
+            <span class="n">pos_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">node_masses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">outbound_attraction_distribution</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">lin_log_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">prevent_overlapping</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">edge_weight_influence</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">jitter_tolerance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">barnes_hut_optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">barnes_hut_theta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">scaling_ratio</span><span class="o">=</span><span class="n">fa2l_scaling_ratio</span><span class="p">,</span>
+            <span class="n">strong_gravity_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">multithread</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">gravity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">scale</span> <span class="o">==</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">size_field</span><span class="p">:</span>
-            <span class="n">original_node_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="n">set_node_size</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">size_field</span><span class="o">=</span><span class="n">size_field</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="n">max_size</span><span class="p">)))</span>
+            <span class="n">original_node_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="n">set_node_size</span><span class="p">(</span>
+                <span class="n">G</span><span class="p">,</span> <span class="n">size_field</span><span class="o">=</span><span class="n">size_field</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="n">max_size</span><span class="p">)))</span>
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">node_size</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">node_size</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
-            <span class="n">original_node_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),[</span><span class="n">node_size</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())))</span>
+            <span class="n">original_node_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">zip</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="p">[</span><span class="n">node_size</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">original_node_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span><span class="n">node_size</span><span class="p">))</span>
-        <span class="n">scale</span> <span class="o">=</span> <span class="n">get_auto_scale</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">pos</span><span class="p">,</span> <span class="n">original_node_sizes</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+            <span class="n">original_node_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="n">node_size</span><span class="p">))</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">get_auto_scale</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">original_node_sizes</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;scale is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scale</span><span class="p">))</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="n">scale_layout</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span><span class="n">scale</span><span class="p">)</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">scale_layout</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">scale</span><span class="p">:</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="n">scale_layout</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span><span class="n">scale</span><span class="p">)</span>
-        
-    
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">scale_layout</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">with_labels</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">num_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">num_labels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
 
@@ -228,7 +413,7 @@
             <span class="n">G</span><span class="p">,</span> <span class="n">size_field</span><span class="o">=</span><span class="n">size_field</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="n">max_size</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">node_size</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">node_size</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
         <span class="n">node_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">node_size</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
-        
+
     <span class="k">if</span> <span class="n">edge_color_by_source</span><span class="p">:</span>
         <span class="n">edge_color</span> <span class="o">=</span> <span class="n">edgecolor_by_source</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node_color</span><span class="p">)</span>
 
@@ -238,14 +423,13 @@
                                     <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                                     <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="n">num_labels</span><span class="p">]</span>
         <span class="n">subset_labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">node_labels</span><span class="p">[</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">subset_label_nodes</span><span class="p">}</span>
-        
+
     <span class="k">if</span> <span class="n">with_labels</span> <span class="ow">and</span> <span class="n">label_field</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">subset_labels</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
 
-
     <span class="c1"># plot the visualization</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="n">fig_dpi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">fig_dpi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 
     <span class="c1"># Draw the nodes, edges, labels separately</span>
@@ -262,8 +446,8 @@
 
     <span class="k">if</span> <span class="n">with_labels</span><span class="p">:</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_labels</span><span class="p">(</span>
-            <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">subset_labels</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="n">font_size</span><span class="p">,</span> 
-            <span class="n">font_color</span><span class="o">=</span><span class="n">font_color</span><span class="p">,</span> <span class="n">font_family</span><span class="o">=</span><span class="n">font_family</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">subset_labels</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="n">font_size</span><span class="p">,</span>
+            <span class="n">font_color</span><span class="o">=</span><span class="n">font_color</span><span class="p">,</span> <span class="n">font_family</span><span class="o">=</span><span class="n">font_family</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">adjust_labels</span><span class="p">:</span>
             <span class="c1"># Adjust label overlapping</span>
             <span class="n">x_pos</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
@@ -272,7 +456,6 @@
                 <span class="n">texts</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
                 <span class="n">x</span><span class="o">=</span><span class="n">x_pos</span><span class="p">,</span>
                 <span class="n">y</span><span class="o">=</span><span class="n">y_pos</span><span class="p">)</span>
-        
 
     <span class="c1"># add title</span>
     <span class="k">if</span> <span class="n">title</span><span class="p">:</span>

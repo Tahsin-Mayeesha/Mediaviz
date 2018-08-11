@@ -160,12 +160,18 @@
 <span class="k">def</span> <span class="nf">_get_pairwise_distance_between_largest_nodes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_sizes</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Boolean. Returns the distances between top k largest nodes</span>
-<span class="sd">    Parameters : </span>
-<span class="sd">    ____________</span>
+
+<span class="sd">    Parameters  </span>
+<span class="sd">    ----------</span>
 
 <span class="sd">    G : A graph object</span>
 <span class="sd">    pos : dict containing the position of the nodes</span>
-<span class="sd">    k : number of nodes to consider    </span>
+<span class="sd">    k : number of nodes to consider</span>
+
+<span class="sd">    Returns </span>
+<span class="sd">    -------</span>
+
+<span class="sd">    Returns the dictionary containing the distance between the top k largest nodes.  </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">top_k_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
         <span class="n">node_sizes</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="p">]]</span>
@@ -177,7 +183,33 @@
 
 
 <div class="viewcode-block" id="get_auto_scale"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.scaling.get_auto_scale">[docs]</a><span class="k">def</span> <span class="nf">get_auto_scale</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_sizes</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Returns the ratio of the ideal vs current top node distance &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Returns the ratio of the ideal vs current top node distance.</span>
+
+<span class="sd">    The scale is being set with a heuristic that we consider k largest nodes to prevent overlap,</span>
+<span class="sd">    take the distances of all these nodes, find the current minimum top node distance. We also </span>
+<span class="sd">    find the ideal minimum top node distance that will prevent overlap and return their ratio to scale</span>
+<span class="sd">    the layout by that scale.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    G : nx.Graph</span>
+
+<span class="sd">        A networkx Graph</span>
+<span class="sd">    </span>
+<span class="sd">    pos : dict</span>
+
+<span class="sd">        A dictionary containing the node positions</span>
+<span class="sd">    </span>
+<span class="sd">    node_sizes : dict</span>
+
+<span class="sd">        A dictionary containing the node sizes.</span>
+<span class="sd">    </span>
+<span class="sd">    k : int, default 20.</span>
+
+<span class="sd">        Number of nodes to consider when setting the scale automatically.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">_get_pairwise_distance_between_largest_nodes</span><span class="p">(</span>
         <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_sizes</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
     <span class="n">current_minimum_top_node_distance</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
@@ -188,7 +220,25 @@
 
 
 <div class="viewcode-block" id="scale_layout"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.scaling.scale_layout">[docs]</a><span class="k">def</span> <span class="nf">scale_layout</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Scales layout &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Scales layout</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    </span>
+<span class="sd">    pos: dict</span>
+<span class="sd">        A dictionary containing the positions of the nodes.</span>
+<span class="sd">        </span>
+<span class="sd">    scale :  int or float.</span>
+<span class="sd">        </span>
+<span class="sd">        Number to scale the positions by. </span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+
+<span class="sd">        Returns Dictionary containing Positions for the nodes scaled by the scale.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 </pre></div>
