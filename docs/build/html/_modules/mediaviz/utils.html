@@ -141,70 +141,85 @@
   <h1>Source code for mediaviz.utils</h1><div class="highlight"><pre>
 <span></span>
 <div class="viewcode-block" id="set_node_color"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.set_node_color">[docs]</a><span class="k">def</span> <span class="nf">set_node_color</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">color_by</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; </span>
-<span class="sd">    Returns a list of colors for each node based on the provided colormap. </span>
+    <span class="sd">&quot;&quot;&quot; Returns a list of colors for each node based on the provided colormap. </span>
 
 <span class="sd">    Parameters </span>
-<span class="sd">    ___________</span>
+<span class="sd">    ----------</span>
 
 <span class="sd">    G : graph.</span>
 <span class="sd">        A networkx graph.</span>
 
-<span class="sd">    color_by : Graph node attribute with finite discrete categorical values.</span>
-<span class="sd">               See : https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges for learning about node attributes</span>
+<span class="sd">    color_by : str</span>
+<span class="sd">        Graph node attribute with finite discrete categorical values.</span>
+<span class="sd">        See : https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges for learning about node attributes</span>
 
-<span class="sd">    colormap : Dict mapping values of color_by attribute to different colors. colors can be color string or named colors</span>
-<span class="sd">               like &#39;r&#39;,&#39;b&#39; etc or hex values.</span>
+<span class="sd">    colormap : </span>
+<span class="sd">        Dict mapping values of color_by attribute to different colors. colors can be a single color like &#39;r&#39; or</span>
+<span class="sd">        hex code of form &#39;#FFFFFF&#39;</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        A list containing the colors for each node.</span>
 
 <span class="sd">    Example </span>
-<span class="sd">    _______</span>
+<span class="sd">    -------</span>
 
 <span class="sd">    &gt;&gt;&gt; colormap = {&#39;male&#39;:&#39;b&#39;,&#39;female&#39;:&#39;r&#39;}</span>
 <span class="sd">    &gt;&gt;&gt; node_colors = set_node_color(G,&quot;gender&quot;,colormap)</span>
-
-<span class="sd">    Output : List of colors in the form [&#39;b&#39;,&#39;b&#39;,&#39;r&#39;,&#39;b&#39;] depending on the attribute value for the particular node.</span>
-
-
+<span class="sd">    [&#39;b&#39;,&#39;b&#39;,&#39;r&#39;,&#39;b&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">node_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">colormap</span><span class="p">[</span><span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">color_by</span><span class="p">]]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">node_colors</span></div>
 
 
 <div class="viewcode-block" id="set_node_size"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.set_node_size">[docs]</a><span class="k">def</span> <span class="nf">set_node_size</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">size_field</span><span class="p">,</span> <span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Returns a list containing values of the size_field attribute from Graph range normalized between [min_size,max_size] interval.</span>
+    <span class="sd">&quot;&quot;&quot; Returns a list containing values of the size_field attribute from Graph range </span>
+<span class="sd">        normalized between [min_size,max_size] interval.</span>
 
-<span class="sd">    Parameters : </span>
-<span class="sd">    ____________</span>
+<span class="sd">    Parameters </span>
+<span class="sd">    ----------</span>
 
 <span class="sd">    G : graph.</span>
 <span class="sd">        A networkx graph.</span>
 
-<span class="sd">    size_field : graph node attribute containing numbers(integers or floats). </span>
-<span class="sd">    See : https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges for learning about graph attributes</span>
+<span class="sd">    size_field : graph attribute</span>
+<span class="sd">        graph node attribute containing numbers(integers or floats). </span>
+<span class="sd">        See : https://networkx.github.io/documentation/networkx-1.10/tutorial/tutorial.html#adding-attributes-to-graphs-nodes-and-edges for learning about graph attributes</span>
 
-<span class="sd">    min_size = minimum value for the new range</span>
-<span class="sd">    max_size = maximum value for the new range.</span>
+<span class="sd">    min_size : float</span>
+<span class="sd">        minimum value for the new range</span>
+<span class="sd">    max_size : float</span>
+<span class="sd">        maximum value for the new range.</span>
 
-<span class="sd">    Equation : </span>
-<span class="sd">    __________</span>
+<span class="sd">    Notes</span>
+<span class="sd">    --------</span>
 
 <span class="sd">    Mapping/scaling a number to a certain range like [0,1] or [-1,1]</span>
 
 <span class="sd">    y = (x - min(d))*(max(n)-min(n))</span>
-<span class="sd">        ----------------------------  + min(n)</span>
+<span class="sd">        _____________________________  + min(n)</span>
 <span class="sd">            (max(d)-min(d))</span>
 
 <span class="sd">    min(d) = minimum value in the data</span>
+
 <span class="sd">    max(d) = maximum value in the data</span>
+
 <span class="sd">    min(n) = minimum value in the new range</span>
+<span class="sd">    </span>
 <span class="sd">    max(n) = maximum value in the new range</span>
 <span class="sd">    input number : x , output : y</span>
 
-<span class="sd">    Example : </span>
-<span class="sd">    _________</span>
+<span class="sd">    Example </span>
+<span class="sd">    -------</span>
 
 <span class="sd">    &gt;&gt;&gt;size_field = &#39;inlink_count&#39;</span>
-<span class="sd">    &gt;&gt;&gt;node_sizes = set_node_size(top_k_subgraph,size_field= &quot;inlink_count&quot;,min_size = 0.1, max_size=800)</span>
+<span class="sd">    &gt;&gt;&gt;node_sizes = set_node_size(G,size_field= &quot;inlink_count&quot;,min_size = 0.1, max_size=800)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        list of node sizes normalized to the range.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -219,28 +234,34 @@
 
 
 <div class="viewcode-block" id="filter_graph"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.filter_graph">[docs]</a><span class="k">def</span> <span class="nf">filter_graph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">filter_by</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Filters the graph by returning the subgraph for the top x nodes for the given filter_by field.</span>
+    <span class="sd">&quot;&quot;&quot;Filters the graph by returning the subgraph for the top x nodes for the given filter_by field.</span>
+<span class="sd">    </span>
 <span class="sd">    To learn about subgraphs see : https://networkx.github.io/documentation/networkx-1.10/reference/generated/networkx.Graph.subgraph.html</span>
 
-<span class="sd">    Parameters : </span>
-<span class="sd">    ____________</span>
+<span class="sd">    Parameters  </span>
+<span class="sd">    ----------</span>
 
 <span class="sd">    G : graph.</span>
 <span class="sd">        A networkx graph.</span>
 
-<span class="sd">    filter_by : Numerical node attribute to filter the graph. Use list comprehension for filtering by catagorical                         attributes.</span>
+<span class="sd">    filter_by : graph node attribute</span>
+<span class="sd">        Numerical node attribute to filter the graph. </span>
 
-<span class="sd">    top : Number of top nodes to return. E.g if the node attribute is size then the function returns </span>
-<span class="sd">          top = 100 largest node subgraph.</span>
+<span class="sd">    top : int</span>
+<span class="sd">        Number of top nodes to return. </span>
+<span class="sd">        E.g if the node attribute is node_size then the function returns top = 100 largest node subgraph.</span>
 
 
-<span class="sd">    Example : </span>
-<span class="sd">    _________</span>
+<span class="sd">    Example  </span>
+<span class="sd">    -------</span>
 
 <span class="sd">    &gt;&gt;&gt; filter_field = &quot;inlink_count&quot;</span>
 <span class="sd">    &gt;&gt;&gt; filter_graph(G,filter_by=filter_field,top=k)</span>
 
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nx.Graph</span>
+<span class="sd">        Subgraph after filtering by the node attribute.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">top</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()):</span>
         <span class="nb">filter</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">filter_by</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)}</span>
@@ -253,22 +274,29 @@
 
 
 <div class="viewcode-block" id="set_node_label"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.set_node_label">[docs]</a><span class="k">def</span> <span class="nf">set_node_label</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">label_field</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Returns a dict mapping nodes to the labels. Used in visualization functions like nx.draw_networkx_labels.</span>
+    <span class="sd">&quot;&quot;&quot; Returns a dict mapping nodes to the labels. </span>
+<span class="sd">    </span>
+<span class="sd">    Helper function for use in visualization functions like nx.draw_networkx_labels.</span>
 
-<span class="sd">    Parameters : </span>
-<span class="sd">    ____________</span>
+<span class="sd">    Parameters </span>
+<span class="sd">    ----------</span>
 
 <span class="sd">    G : graph.</span>
 <span class="sd">        A networkx graph.</span>
 
-<span class="sd">    label_field : Node attribute to be set as a the label for the node.</span>
+<span class="sd">    label_field : node attribute</span>
+<span class="sd">        Node attribute to be set as a the label for the node.</span>
 
-<span class="sd">    Example : </span>
-<span class="sd">    _________</span>
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
 
 <span class="sd">    &gt;&gt;&gt; label_field = &quot;label&quot;</span>
 <span class="sd">    &gt;&gt;&gt; labels = set_node_label(G,label_field)</span>
 
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        List of node labels</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">node_labels</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">label_field</span><span class="p">])</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
@@ -278,20 +306,26 @@
 <div class="viewcode-block" id="edgecolor_by_source"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.edgecolor_by_source">[docs]</a><span class="k">def</span> <span class="nf">edgecolor_by_source</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">node_colors</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Returns a list of colors to set as edge colors based on the source node for each edge.</span>
 
-<span class="sd">    Parameters : </span>
-<span class="sd">    ____________</span>
+<span class="sd">    Parameters </span>
+<span class="sd">    ----------</span>
 
 <span class="sd">    G : graph.</span>
 <span class="sd">        A networkx graph.</span>
 
-<span class="sd">    node_colors : list of node colors.</span>
+<span class="sd">    node_colors : list </span>
+<span class="sd">        List of node colors.</span>
 
-<span class="sd">    Example : </span>
-<span class="sd">    ___________</span>
+<span class="sd">    Example  </span>
+<span class="sd">    --------</span>
 
 <span class="sd">    &gt;&gt;&gt; colormap = {&#39;male&#39;:&#39;b&#39;,&#39;female&#39;:&#39;r&#39;}</span>
 <span class="sd">    &gt;&gt;&gt; node_colors = set_node_color(G,&quot;gender&quot;,colormap)</span>
 <span class="sd">    &gt;&gt;&gt; edge_colors = edgecolor_by_source(G,node_colors)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list</span>
+<span class="sd">        list of colors for each edge of the graph color set by the source node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -303,36 +337,52 @@
 
 
 <div class="viewcode-block" id="get_subgraph_pos"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.get_subgraph_pos">[docs]</a><span class="k">def</span> <span class="nf">get_subgraph_pos</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; </span>
-<span class="sd">    Returns the filtered positions for subgraph G. If subgraph = original graph then pos will be returned.</span>
+    <span class="sd">&quot;&quot;&quot; Returns the filtered positions for subgraph G. If subgraph = original graph then pos will be returned.</span>
 
-<span class="sd">    Parameters : </span>
-<span class="sd">    ____________</span>
+<span class="sd">    Parameters </span>
+<span class="sd">    ----------</span>
 
-<span class="sd">    G : A graph object.</span>
-<span class="sd">    Pos : A dictionary with nodes as keys and positions as values.</span>
+<span class="sd">    G : nx.Graph</span>
+<span class="sd">        A graph object.</span>
+<span class="sd">    Pos : dict</span>
+<span class="sd">        A dictionary with nodes as keys and positions as values.</span>
 
-<span class="sd">    Example : </span>
-<span class="sd">    _________</span>
+<span class="sd">    Example </span>
+<span class="sd">    -------</span>
 
-<span class="sd">    &gt;&gt;&gt;pos  = nx.spring_layout(G)</span>
-<span class="sd">    &gt;&gt;&gt;subgraph_nodes = [&#39;1&#39;,&#39;2&#39;,&#39;3&#39;]</span>
-<span class="sd">    &gt;&gt;&gt;subgraph = G.subgraph(subgraph_nodes)</span>
-<span class="sd">    &gt;&gt;&gt;subgraph_positions = get_subgraph_pos(subgraph,pos)</span>
+<span class="sd">    &gt;&gt;&gt; pos  = nx.spring_layout(G)</span>
+<span class="sd">    &gt;&gt;&gt; subgraph_nodes = [&#39;1&#39;,&#39;2&#39;,&#39;3&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; subgraph = G.subgraph(subgraph_nodes)</span>
+<span class="sd">    &gt;&gt;&gt; subgraph_positions = get_subgraph_pos(subgraph,pos)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict </span>
+<span class="sd">        Assuming positions were generated earlier for a larger graph with some layout algorithm</span>
+<span class="sd">        this functions returns the filtered positions by the subgraph. </span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()}</span></div>
 
 
 <div class="viewcode-block" id="draw_networkx_nodes_custom"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.utils.draw_networkx_nodes_custom">[docs]</a><span class="k">def</span> <span class="nf">draw_networkx_nodes_custom</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">node_size</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Draws networkx graph nodes with circles instead of using scatter function like draw_networkx_nodes</span>
+    <span class="sd">&quot;&quot;&quot;Draws networkx graph nodes with circles instead of using plt.scatter function like draw_networkx_nodes</span>
 
-<span class="sd">    G: A networkx graph object.</span>
-<span class="sd">    pos : A dictionary with nodes as keys and positions as values</span>
-<span class="sd">    node_size : A list containing node sizes for each node</span>
-<span class="sd">    node_color : A single color or list containing color values. Behavior same as draw_networkx_nodes</span>
-<span class="sd">    alpha : opacity (between 0-1) for setting transparency of the nodes</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    G : nx.Graph</span>
+<span class="sd">        A networkx graph object.</span>
+<span class="sd">    pos : dict</span>
+<span class="sd">        A dictionary with nodes as keys and positions as values.</span>
+<span class="sd">    node_size : list</span>
+<span class="sd">        A list containing node sizes for each node.</span>
+<span class="sd">    node_color : str or list </span>
+<span class="sd">        A single color or list containing color values. Behavior same as draw_networkx_nodes</span>
+<span class="sd">    alpha : float</span>
+<span class="sd">        opacity (between 0-1) for setting transparency of the nodes</span>
 <span class="sd">    ax : axis </span>
+
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>

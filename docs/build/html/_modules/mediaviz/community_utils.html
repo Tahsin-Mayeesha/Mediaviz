@@ -144,16 +144,87 @@
 <span class="kn">import</span> <span class="nn">community</span>
 
 <span class="k">def</span> <span class="nf">_generate_random_hex_color</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Generates handom hex color code and returns them as string</span>
+<span class="sd">    </span>
+<span class="sd">    Helper function for setting community colormaps. Does not take any input.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        hex code. Example : &quot;#FFFFFF&quot;. </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">r</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">)</span>
     <span class="k">return</span> <span class="s1">&#39;#</span><span class="si">%02X%02X%02X</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r</span><span class="p">(),</span><span class="n">r</span><span class="p">(),</span><span class="n">r</span><span class="p">())</span>
 
 
 <div class="viewcode-block" id="get_community_colormap"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.community_utils.get_community_colormap">[docs]</a><span class="k">def</span> <span class="nf">get_community_colormap</span><span class="p">(</span><span class="n">partition</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes dict of partitions after community detection and returns dict with colormap for partitions.</span>
+
+<span class="sd">    The function is currently used with python-louvain package, but it&#39;s a general purpose function</span>
+<span class="sd">    for randomly generating colorlaps from node attributes.Expected to change into </span>
+<span class="sd">    get_random_colormap(node_attributes) in the next version.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    partition : dict</span>
+<span class="sd">        Dictionary of form {node1:partition,node2:partition....} generated after community detection.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import community #python-louvain package</span>
+<span class="sd">    &gt;&gt;&gt; import networkx as nx</span>
+<span class="sd">    &gt;&gt;&gt; from mediaviz.community_utils import get_community_colormap</span>
+<span class="sd">    &gt;&gt;&gt; G = nx.florentine_families_graph()</span>
+<span class="sd">    &gt;&gt;&gt; partitions = community.best_partition(G)</span>
+<span class="sd">    &gt;&gt;&gt; get_community_colormap(partitions)</span>
+<span class="sd">    {0: &#39;#A0FD29&#39;, 1: &#39;#C3E994&#39;, 2: &#39;#61EDD2&#39;, 3: &#39;#DCB0DF&#39;}</span>
+
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary containing partitions and colormaps. </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">partitions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">partition</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span><span class="n">_generate_random_hex_color</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">partitions</span><span class="p">}</span>
     <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="get_community_graph"><a class="viewcode-back" href="../../mediaviz.html#mediaviz.community_utils.get_community_graph">[docs]</a><span class="k">def</span> <span class="nf">get_community_graph</span><span class="p">(</span><span class="n">G</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Takes a Graph, generates partitions from python-louvain package, sets the partitions as node</span>
+<span class="sd">    attributes and returns the Graph and partitions.</span>
+
+<span class="sd">    Helper function to integrate community detection with the draw function. In the draw function color_by</span>
+<span class="sd">    parameter takes a node attribute along with a colormap for the attributes. So here python-louvain is used</span>
+<span class="sd">    for getting the community partitions first and then we set those partitions as node attributes. </span>
+
+<span class="sd">    Examples </span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import networkx as nx</span>
+<span class="sd">    &gt;&gt;&gt; G = nx.florentine_families_graph()</span>
+<span class="sd">    &gt;&gt;&gt; from mediaviz.community_utils import get_community_graph</span>
+<span class="sd">    &gt;&gt;&gt; G, partitions = get_community_graph(G)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    G : nx.Graph</span>
+<span class="sd">        A networkx graph.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes </span>
+<span class="sd">    -----</span>
+
+<span class="sd">    If G is a digraph , as python-louvain package does not currently support digraphs, it&#39;s changed to the </span>
+<span class="sd">    undirected graph of the largest weakly connected component.See source if necessary.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple </span>
+<span class="sd">        Returns a tuple of form (G, partitions) where G has partitions set as node attributes and </span>
+<span class="sd">        partitions are partitions generated from the python-louvain package. </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="o">==</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">:</span>
         <span class="n">G</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">weakly_connected_component_subgraphs</span><span class="p">(</span><span class="n">G</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">to_undirected</span><span class="p">()</span>
     <span class="n">partitions</span> <span class="o">=</span> <span class="n">community</span><span class="o">.</span><span class="n">best_partition</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>

@@ -11,7 +11,11 @@ See blog posts related to the project in the following links.
 - [GSOC 2018 Experience : Visualizing Media Data With Network Analysis (PART 1 )](https://medium.com/learning-machine-learning/gsoc-2018-experience-visualizing-media-data-with-network-analysis-part-1-c4ba4b76b1aa)
 - [GSOC 2018 : Network Visualization Of MediaCloud Topic Network + 1st evaluation (Part 2)](https://medium.com/learning-machine-learning/gsoc-2018-network-visualization-of-mediacloud-topic-network-1st-evaluation-part-2-ca72e25a88d5)
 
-![Deep State Network](assets/deep_state.png)
+![deep_state.png](https://github.com/Tahsin-Mayeesha/Mediaviz/blob/master/assets/deep_state.png?raw=true) 
+
+
+
+
 
 
 

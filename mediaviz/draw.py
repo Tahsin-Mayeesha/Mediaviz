@@ -29,7 +29,25 @@ def draw_forceatlas2_network(
         edge_color_by_source=False,
         figsize=(10, 10), fig_dpi=100,
         **kwargs):
-    
+    """ Main function for drawing graph.
+
+    The function has sensible defaults. If no scale is provided scale for the graph is set automatically. If
+    no pos is given then force atlas 2 layout is used. Other parameters can be described below can be 
+    used to customize different aspects of the visualization.
+
+    Parameters
+    ----------
+    arg1 : int
+        Description of arg1
+    arg2 : str
+        Description of arg2
+
+    Returns
+    -------
+    bool
+        Description of return value
+
+    """
     if node_list:
         G = nx.subgraph(node_list)
     
