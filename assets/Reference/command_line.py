@@ -19,7 +19,7 @@ def main():
     draw_forceatlas2_network(
         G,
         num_labels = 20,
-        node_colors = node_colors,
+        node_color = node_colors,
         with_labels=True, label_field="label",
         filter_by="inlink_count", top=100,
         size_field = "inlink_count",min_size=0.1,max_size=200,
