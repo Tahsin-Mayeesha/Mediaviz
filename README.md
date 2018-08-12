@@ -80,7 +80,7 @@ from mediaviz.draw import draw_forceatlas2_network
 path= 'graphname.gexf'
 G = nx.erdos_renyi_graph(200,0.7)
 
-draw_forceatlas2_network(G,node_colors='purple', node_sizes=10, edge_color='gray',filename="random.png")
+draw_forceatlas2_network(G,node_color='purple', node_size=10, edge_color='gray',filename="random.png")
 ```
 
 ![](assets/random.png)
@@ -101,7 +101,7 @@ node_colors = list(parse_colors(path,hex=True).values())
 draw_forceatlas2_network(G,
      num_labels = 30, # num_labels indicates to only label top 30 largest nodes by node_size
      fa2l_scaling_ratio=40,fa2l_iterations=100, # parameters for the force atlas 2 layout
-     node_colors = node_colors, 
+     node_color = node_colors, 
      with_labels=True, label_field="label",
      filter_by="inlink_count", top=200, # filter to get top 200 nodes sorted by inlink_count
      size_field = "inlink_count",min_size=0.1,max_size=200, # resize by inlink_count
@@ -133,7 +133,7 @@ colormap = get_community_colormap(partitions)
 draw_forceatlas2_network(
         G,
         color_by="partition", colormap=colormap,
-        node_sizes = 10,
+        node_size = 10,
         with_labels=True, 
         edge_color_by_source=True, node_opacity = 1, edge_opacity = 1,
         font_size=10, filename = "community.png",
@@ -151,7 +151,7 @@ G = nx.karate_club_graph()
 pos = nx.spring_layout(G)
 draw_forceatlas2_network(G,
                          pos = pos,
-                         node_sizes=10,
+                         node_size=10,
                          color_by="club",
                          colormap={"Officer":"r","Mr. Hi":"b"},
                          node_opacity=1,edge_opacity=1, filename="karate_club.png",
