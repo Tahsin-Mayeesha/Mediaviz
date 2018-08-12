@@ -6,7 +6,7 @@ Mediaviz is a network visualization library created for my project  [Automating 
 
 [Mediacloud](http://mediacloud.org/) is an open source, open data platform for researchers that provides data and statistics for quantitative analysis. Mediaviz has been originally developed to automate the network visualization of the media source networks for different topics such as network neutrality, ebola and more. 
 
-However, beyond the mediacloud usage, Mediaviz is also a general purpose network visualization library provides functionalities for force based layout such as [force atlas 2](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679), automatic scaling to prevent node overlap, Gephi like features for network filtering, coloring, node resizing, prevention of label overlap and community visualization. 
+However, beyond the mediacloud usage, Mediaviz is also a general purpose network visualization library. It provides functionalities for force based layout such as [force atlas 2](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679), automatic scaling to prevent node overlap, Gephi like features for network filtering, coloring, node resizing, prevention of label overlap and community visualization. 
 
 Mediaviz uses force atlas 2 layout as default and scales the layout automatically for graphs with 100-1000 nodes that has a power law linking structure.  Having sensible defaults, Mediaviz can be used for general graph visualization as well as publishable graphs with many customization parameters including using the drawing function with any other network layout function in networkx or beyond. 
 
@@ -32,7 +32,7 @@ Complete Documentation is available at https://mediaviz.readthedocs.io/en/latest
 
 # Installation
 
-To install the package from pip :
+To install the [package](https://pypi.org/project/mediaviz/) from pip :
 
 ```python
 pip install mediaviz
@@ -169,6 +169,10 @@ If you want to contribute please send a pull request with listing the changes yo
 # License
 
 This project is licensed under the MIT License - see the License.txt file for details.
+
+# List Of Contributors
+
+Tahsin Mayeesha, Hal Roberts(Mentor)
 
 
 

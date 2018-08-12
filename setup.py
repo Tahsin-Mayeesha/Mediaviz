@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(name='mediaviz',
-      version='0.1.1',
+      version='0.1.2',
       description='Visualize Networks With Force Atlas 2 Layout',
       long_description = long_description,
           long_description_content_type="text/markdown",
