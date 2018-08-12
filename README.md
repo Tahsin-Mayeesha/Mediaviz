@@ -6,9 +6,11 @@ Mediaviz is a network visualization library created for my project  [Automating 
 
 [Mediacloud](http://mediacloud.org/) is an open source, open data platform for researchers that provides data and statistics for quantitative analysis. Mediaviz has been originally developed to automate the network visualization of the media source networks for different topics such as network neutrality, ebola and more. 
 
-However, beyond the mediacloud usage, Mediaviz is also a general purpose network visualization library provides functionalities for force based layout such as force atlas 2, automatic scaling to prevent node overlap, Gephi like features for network filtering, coloring, node resizing, prevention of label overlap and community visualization. 
+However, beyond the mediacloud usage, Mediaviz is also a general purpose network visualization library provides functionalities for force based layout such as [force atlas 2](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0098679), automatic scaling to prevent node overlap, Gephi like features for network filtering, coloring, node resizing, prevention of label overlap and community visualization. 
 
-Mediaviz uses force atlas 2 layout as default and scales the layout automatically for graphs with 100-1000 nodes that has a power law linking structure.  Having sensible defaults, mediaviz can be used for general graph visualization as well as publishable graphs with many customization parameters. Examples and demo visualizations are provided in the usage section.
+Mediaviz uses force atlas 2 layout as default and scales the layout automatically for graphs with 100-1000 nodes that has a power law linking structure.  Having sensible defaults, Mediaviz can be used for general graph visualization as well as publishable graphs with many customization parameters including using the drawing function with any other network layout function in networkx or beyond. 
+
+Examples and demo visualizations are provided in the usage section.
 
 # Documentation
 
@@ -158,9 +160,11 @@ draw_forceatlas2_network(G,
 
 ![](assets/karate_club.png)
 
-# Contribution
 
-If you want to contribute please send a pull request with listing the changes you have made and the reasoning clearly stated.
+
+# Contribution and Further Improvement
+
+If you want to contribute please send a pull request with listing the changes you have made and the reasoning clearly stated. Integrating the drawing function with matplotlib better and trying out different heuristics for automated scaling would be a priority.
 
 # License
 
