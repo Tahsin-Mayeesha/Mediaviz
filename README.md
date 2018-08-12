@@ -2,7 +2,7 @@
 
 # Mediaviz
 
-Mediaviz is a network visualization library created for my project  [Automating Network Visualization and community detection of Media Sources Network from Mediacloud data](https://summerofcode.withgoogle.com/projects/#6265196406898688) done with [Berkman Klein Center of Internet And Society](http://cyber.law.harvard.edu/) at Harvard University while participating at [Google Summer Of Code 2018](https://summerofcode.withgoogle.com/) under the guidance of mentor [Hal Roberts](http://cyber.harvard.edu/people/hroberts).
+Mediaviz is a network visualization library created for my project  [Automating Force Based Layout Scaling And Network Visualization For Media Source Networks From MediaCloud Topic Graphs ](https://summerofcode.withgoogle.com/projects/#6265196406898688) done with [Berkman Klein Center of Internet And Society](http://cyber.law.harvard.edu/) at Harvard University while participating at [Google Summer Of Code 2018](https://summerofcode.withgoogle.com/) under the guidance of mentor [Hal Roberts](http://cyber.harvard.edu/people/hroberts).
 
 [Mediacloud](http://mediacloud.org/) is an open source, open data platform for researchers that provides data and statistics for quantitative analysis. Mediaviz has been originally developed to automate the network visualization of the media source networks for different topics such as network neutrality, ebola and more. 
 
