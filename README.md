@@ -162,6 +162,10 @@ draw_forceatlas2_network(G,
 
 
 
+# Notes
+
+Instead  of the automatic layout, it's possible to scale the graph manually with the scale parameter in drawing function. Force Atlas 2 first initializes the points position randomly and then iterativly adjusts their location based on attraction-repulsion force, please check [fa2l](https://github.com/bosiakov/fa2l/tree/master/fa2l) package for details on how the default layout is being calculated. Also, all graphs are different. To get the best results experimentation with node sizes may be required. The axis scales are scaled by matplotlib after drawing the circles for best performance. Also in network visualization the relative position of the nodes matter more than the axis co-ordinates to reveal network structure.
+
 # Contribution and Further Improvement
 
 If you want to contribute please send a pull request with listing the changes you have made and the reasoning clearly stated. Integrating the drawing function with matplotlib better and trying out different heuristics for automated scaling would be a priority.
